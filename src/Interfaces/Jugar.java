@@ -961,6 +961,7 @@ public class Jugar extends javax.swing.JFrame implements Runnable {
     public void pagar(Resultado resultado) {
         //Paga las ganancias
         if (resultado.getNum() == 0) {
+            hola
             //Cero, gana la banca
             //Se paga el 0
             taLog.append("Mesa --> Has ganado " + apuestaNumeros[0] * 2 + " fichas!\n");
