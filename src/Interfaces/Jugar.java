@@ -47,7 +47,7 @@ public class Jugar extends javax.swing.JFrame implements Runnable {
     private int apuestaImpar;
     private int[] apuestaDocenas;
     private int[] apuestaBajo1Alto2;
-    private int[] apuestaColumnas;
+    private int[] apuestaFilas;
     private int[] apuestaNumeros;
 
     public Jugar(Menu m, Socket cliente) {
@@ -74,7 +74,7 @@ public class Jugar extends javax.swing.JFrame implements Runnable {
         this.cliente = cliente;
         this.apuestaDocenas = new int[3];
         this.apuestaBajo1Alto2 = new int[2];
-        this.apuestaColumnas = new int[3];
+        this.apuestaFilas = new int[3];
         this.apuestaNumeros = new int[37];
 
         try {
@@ -748,7 +748,7 @@ public class Jugar extends javax.swing.JFrame implements Runnable {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btCerrar, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -766,13 +766,11 @@ public class Jugar extends javax.swing.JFrame implements Runnable {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0))
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -925,18 +923,29 @@ public class Jugar extends javax.swing.JFrame implements Runnable {
     public void apostarColumna(int numCol, JButton boton) {
         //Apuesta a la columna seleccionada
         if (fichaSeleccionada == 0) {
-            fichas += apuestaColumnas[numCol];
-            apuestaColumnas[numCol] = 0;
+            fichas += apuestaFilas[numCol];
+            apuestaFilas[numCol] = 0;
             boton.setText("");
             labelFichas.setText("Fichas: " + fichas);
         } else if (fichaSeleccionada > fichas) {
             JOptionPane.showMessageDialog(this, "No tiene suficientes fichas");
         } else {
             fichas -= fichaSeleccionada;
-            apuestaColumnas[numCol] += fichaSeleccionada;
-            boton.setText("" + apuestaColumnas[numCol]);
+            apuestaFilas[numCol] += fichaSeleccionada;
+            boton.setText("" + apuestaFilas[numCol]);
             labelFichas.setText("Fichas: " + fichas);
         }
+    }
+
+    private void setLabelsBotones() {
+        //Limpia las labels de los botones de la mesa
+        btNegro.setText("");
+        btRojo.setText("");
+        for (Component c: panelColumnas.getComponents()) {
+            JButton boton = (JButton) c;
+            boton.setText("2 TO 1");
+        }
+
     }
 
     public void deshabilitar() {
@@ -960,40 +969,57 @@ public class Jugar extends javax.swing.JFrame implements Runnable {
 
     public void pagar(Resultado resultado) {
         //Paga las ganancias
+        int ganancias = 0;
+
         if (resultado.getNum() == 0) {
             //Cero, gana la banca
             //Se paga el 0
-            taLog.append("Mesa --> Has ganado " + apuestaNumeros[0] * 2 + " fichas!\n");
-            fichas += apuestaRojo * 2;
-            labelFichas.setText("Fichas: " + fichas);
+            ganancias += (apuestaNumeros[0] * 36);
         } else {
+            //No ha salido el 0, se paga al usuario las ganancias
+            //Numero (pleno)
+            ganancias += (apuestaNumeros[resultado.getNum()] * 36);
+            //Color
             if (resultado.getColor() == Color.RED) {
                 //ROJO, se pagan las ganancias
-                taLog.append("Mesa --> Has ganado " + apuestaRojo * 2 + " fichas!\n");
-                fichas += apuestaRojo * 2;
-                labelFichas.setText("Fichas: " + fichas);
+                ganancias += (apuestaRojo * 2);
             } else {
                 //NEGRO, se pagan las ganancias
-                taLog.append("Mesa --> Has ganado " + apuestaNegro * 2 + " fichas!\n");
-                fichas += apuestaNegro * 2;
-                labelFichas.setText("Fichas: " + fichas);
+                ganancias += (apuestaNegro * 2);
             }
-            //Actualiza la variable auxiliar
-            fichasPreApuesta = fichas;
-        }
+            //Par/Impar
+            if (resultado.getPar() == 1) {
+                //PAR, se pagan las ganancias
+                ganancias += (apuestaPar * 2);
+            } else {
+                //IMPAR, se pagan las ganancias
+                ganancias += (apuestaImpar * 2);
+            }
+            //Alto/Bajo
+            ganancias += (apuestaBajo1Alto2[resultado.getBajo1Alto2() - 1] * 2);
+            //Docenas
+            ganancias += (apuestaDocenas[resultado.getDocena() - 1] * 3);
+            //Filas
+            ganancias += (apuestaFilas[resultado.getFila() - 1] * 3);
 
-        //Se limpia la mesa
-        apuestaNegro = 0;
-        btNegro.setText("");
-        apuestaRojo = 0;
-        btRojo.setText("");
-        apuestaColumnas = new int[3];
-        apuestaDocenas = new int[3];
-        apuestaBajo1Alto2 = new int[2];
-        apuestaColumnas = new int[3];
-        apuestaNumeros = new int[37];
-        apuestaPar = 0;
-        apuestaImpar = 0;
+            //Pagar y actualizar variables y misc.
+            taLog.append("Mesa --> Has ganado " + ganancias + " fichas!\n");
+            fichas += ganancias;
+            fichasPreApuesta = fichas;
+            labelFichas.setText("Fichas: " + fichas);
+
+            //Se limpia la mesa
+            apuestaNegro = 0;
+            apuestaRojo = 0;
+            apuestaFilas = new int[3];
+            apuestaDocenas = new int[3];
+            apuestaBajo1Alto2 = new int[2];
+            apuestaFilas = new int[3];
+            apuestaNumeros = new int[37];
+            apuestaPar = 0;
+            apuestaImpar = 0;
+            setLabelsBotones();
+        }
     }
 
     public void cerrarVentana() {

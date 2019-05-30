@@ -38,7 +38,7 @@ public class Resultado {
     
     public void imprimir() {
         //Imprime por pantalla el resultado
-        System.out.println("" + getNum() + getColor() + " Par:" + isPar() + " primeraMitad:" + isPrimeraMitad1a18() +
+        System.out.println("" + getNum() + getColor() + " Par:" + getPar() + " primeraMitad:" + getBajo1Alto2() +
                 getDocena() + getFila());
     }
 
@@ -73,7 +73,7 @@ public class Resultado {
     /**
      * @return the par
      */
-    public int isPar() {
+    public int getPar() {
         return par;
     }
 
@@ -85,14 +85,14 @@ public class Resultado {
     }
 
     /**
-     * @return the primeraMitad1a18
+     * @return the bajo1Alto2
      */
-    public int isPrimeraMitad1a18() {
+    public int getBajo1Alto2() {
         return bajo1alto2;
     }
 
     /**
-     * @param primeraMitad1a18 the primeraMitad1a18 to set
+     * @param bajo1Alto2 the primeraMitad1a18 to set
      */
     public void setBajo1Alto2(int primeraMitad1a18) {
         this.bajo1alto2 = primeraMitad1a18;
