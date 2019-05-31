@@ -51,17 +51,26 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace max="32767" attributes="0"/>
-                  <Group type="103" groupAlignment="1" attributes="0">
-                      <Component id="btCerrar" min="-2" pref="37" max="-2" attributes="0"/>
-                      <Component id="labelFichas" min="-2" max="-2" attributes="0"/>
-                      <Group type="102" alignment="1" attributes="0">
-                          <Component id="panelLog" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                              <Component id="panelMesa" max="32767" attributes="0"/>
-                              <Component id="panelFichas" max="32767" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" attributes="0">
+                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          <Group type="103" groupAlignment="1" attributes="0">
+                              <Component id="labelFichas" min="-2" max="-2" attributes="0"/>
+                              <Group type="102" alignment="1" attributes="0">
+                                  <Component id="panelLog" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                      <Component id="panelMesa" max="32767" attributes="0"/>
+                                      <Component id="panelFichas" max="32767" attributes="0"/>
+                                  </Group>
+                              </Group>
                           </Group>
+                      </Group>
+                      <Group type="102" alignment="1" attributes="0">
+                          <Component id="labelTiempo" min="-2" pref="280" max="-2" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
+                          <Component id="btCerrar" min="-2" pref="37" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
@@ -72,7 +81,10 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="32767" attributes="0"/>
-                  <Component id="btCerrar" min="-2" pref="37" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <Component id="btCerrar" min="-2" pref="37" max="-2" attributes="0"/>
+                      <Component id="labelTiempo" max="32767" attributes="0"/>
+                  </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Group type="102" attributes="0">
@@ -390,6 +402,9 @@
                         <Property name="text" type="java.lang.String" value="3"/>
                         <Property name="toolTipText" type="java.lang.String" value="Numero (35:1)"/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btNumero3ActionPerformed"/>
+                      </Events>
                     </Component>
                     <Component class="javax.swing.JButton" name="btNumero6">
                       <Properties>
@@ -405,6 +420,9 @@
                         <Property name="text" type="java.lang.String" value="6"/>
                         <Property name="toolTipText" type="java.lang.String" value="Numero (35:1)"/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btNumero6ActionPerformed"/>
+                      </Events>
                     </Component>
                     <Component class="javax.swing.JButton" name="btNumero9">
                       <Properties>
@@ -420,6 +438,9 @@
                         <Property name="text" type="java.lang.String" value="9"/>
                         <Property name="toolTipText" type="java.lang.String" value="Numero (35:1)"/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btNumero9ActionPerformed"/>
+                      </Events>
                     </Component>
                     <Component class="javax.swing.JButton" name="btNumero12">
                       <Properties>
@@ -435,6 +456,9 @@
                         <Property name="text" type="java.lang.String" value="12"/>
                         <Property name="toolTipText" type="java.lang.String" value="Numero (35:1)"/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btNumero12ActionPerformed"/>
+                      </Events>
                     </Component>
                     <Component class="javax.swing.JButton" name="btNumero15">
                       <Properties>
@@ -450,6 +474,9 @@
                         <Property name="text" type="java.lang.String" value="15"/>
                         <Property name="toolTipText" type="java.lang.String" value="Numero (35:1)"/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btNumero15ActionPerformed"/>
+                      </Events>
                     </Component>
                     <Component class="javax.swing.JButton" name="btNumero18">
                       <Properties>
@@ -465,6 +492,9 @@
                         <Property name="text" type="java.lang.String" value="18"/>
                         <Property name="toolTipText" type="java.lang.String" value="Numero (35:1)"/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btNumero18ActionPerformed"/>
+                      </Events>
                     </Component>
                     <Component class="javax.swing.JButton" name="btNumero21">
                       <Properties>
@@ -480,6 +510,9 @@
                         <Property name="text" type="java.lang.String" value="21"/>
                         <Property name="toolTipText" type="java.lang.String" value="Numero (35:1)"/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btNumero21ActionPerformed"/>
+                      </Events>
                     </Component>
                     <Component class="javax.swing.JButton" name="btNumero24">
                       <Properties>
@@ -495,6 +528,9 @@
                         <Property name="text" type="java.lang.String" value="24"/>
                         <Property name="toolTipText" type="java.lang.String" value="Numero (35:1)"/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btNumero24ActionPerformed"/>
+                      </Events>
                     </Component>
                     <Component class="javax.swing.JButton" name="btNumero27">
                       <Properties>
@@ -510,6 +546,9 @@
                         <Property name="text" type="java.lang.String" value="27"/>
                         <Property name="toolTipText" type="java.lang.String" value="Numero (35:1)"/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btNumero27ActionPerformed"/>
+                      </Events>
                     </Component>
                     <Component class="javax.swing.JButton" name="btNumero30">
                       <Properties>
@@ -525,6 +564,9 @@
                         <Property name="text" type="java.lang.String" value="30"/>
                         <Property name="toolTipText" type="java.lang.String" value="Numero (35:1)"/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btNumero30ActionPerformed"/>
+                      </Events>
                     </Component>
                     <Component class="javax.swing.JButton" name="btNumero33">
                       <Properties>
@@ -540,6 +582,9 @@
                         <Property name="text" type="java.lang.String" value="33"/>
                         <Property name="toolTipText" type="java.lang.String" value="Numero (35:1)"/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btNumero33ActionPerformed"/>
+                      </Events>
                     </Component>
                     <Component class="javax.swing.JButton" name="btNumero36">
                       <Properties>
@@ -555,6 +600,9 @@
                         <Property name="text" type="java.lang.String" value="36"/>
                         <Property name="toolTipText" type="java.lang.String" value="Numero (35:1)"/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btNumero36ActionPerformed"/>
+                      </Events>
                     </Component>
                     <Component class="javax.swing.JButton" name="btNumero2">
                       <Properties>
@@ -570,6 +618,9 @@
                         <Property name="text" type="java.lang.String" value="2"/>
                         <Property name="toolTipText" type="java.lang.String" value="Numero (35:1)"/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btNumero2ActionPerformed"/>
+                      </Events>
                     </Component>
                     <Component class="javax.swing.JButton" name="btNumero5">
                       <Properties>
@@ -585,6 +636,9 @@
                         <Property name="text" type="java.lang.String" value="5"/>
                         <Property name="toolTipText" type="java.lang.String" value="Numero (35:1)"/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btNumero5ActionPerformed"/>
+                      </Events>
                     </Component>
                     <Component class="javax.swing.JButton" name="btNumero8">
                       <Properties>
@@ -600,6 +654,9 @@
                         <Property name="text" type="java.lang.String" value="8"/>
                         <Property name="toolTipText" type="java.lang.String" value="Numero (35:1)"/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btNumero8ActionPerformed"/>
+                      </Events>
                     </Component>
                     <Component class="javax.swing.JButton" name="btNumero11">
                       <Properties>
@@ -615,6 +672,9 @@
                         <Property name="text" type="java.lang.String" value="11"/>
                         <Property name="toolTipText" type="java.lang.String" value="Numero (35:1)"/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btNumero11ActionPerformed"/>
+                      </Events>
                     </Component>
                     <Component class="javax.swing.JButton" name="btNumero14">
                       <Properties>
@@ -630,6 +690,9 @@
                         <Property name="text" type="java.lang.String" value="14"/>
                         <Property name="toolTipText" type="java.lang.String" value="Numero (35:1)"/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btNumero14ActionPerformed"/>
+                      </Events>
                     </Component>
                     <Component class="javax.swing.JButton" name="btNumero17">
                       <Properties>
@@ -645,6 +708,9 @@
                         <Property name="text" type="java.lang.String" value="17"/>
                         <Property name="toolTipText" type="java.lang.String" value="Numero (35:1)"/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btNumero17ActionPerformed"/>
+                      </Events>
                     </Component>
                     <Component class="javax.swing.JButton" name="btNumero20">
                       <Properties>
@@ -660,6 +726,9 @@
                         <Property name="text" type="java.lang.String" value="20"/>
                         <Property name="toolTipText" type="java.lang.String" value="Numero (35:1)"/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btNumero20ActionPerformed"/>
+                      </Events>
                     </Component>
                     <Component class="javax.swing.JButton" name="btNumero23">
                       <Properties>
@@ -675,6 +744,9 @@
                         <Property name="text" type="java.lang.String" value="23"/>
                         <Property name="toolTipText" type="java.lang.String" value="Numero (35:1)"/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btNumero23ActionPerformed"/>
+                      </Events>
                     </Component>
                     <Component class="javax.swing.JButton" name="btNumero26">
                       <Properties>
@@ -690,6 +762,9 @@
                         <Property name="text" type="java.lang.String" value="26"/>
                         <Property name="toolTipText" type="java.lang.String" value="Numero (35:1)"/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btNumero26ActionPerformed"/>
+                      </Events>
                     </Component>
                     <Component class="javax.swing.JButton" name="btNumero29">
                       <Properties>
@@ -705,6 +780,9 @@
                         <Property name="text" type="java.lang.String" value="29"/>
                         <Property name="toolTipText" type="java.lang.String" value="Numero (35:1)"/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btNumero29ActionPerformed"/>
+                      </Events>
                     </Component>
                     <Component class="javax.swing.JButton" name="btNumero32">
                       <Properties>
@@ -720,6 +798,9 @@
                         <Property name="text" type="java.lang.String" value="32"/>
                         <Property name="toolTipText" type="java.lang.String" value="Numero (35:1)"/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btNumero32ActionPerformed"/>
+                      </Events>
                     </Component>
                     <Component class="javax.swing.JButton" name="btNumero35">
                       <Properties>
@@ -735,6 +816,9 @@
                         <Property name="text" type="java.lang.String" value="35"/>
                         <Property name="toolTipText" type="java.lang.String" value="Numero (35:1)"/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btNumero35ActionPerformed"/>
+                      </Events>
                     </Component>
                     <Component class="javax.swing.JButton" name="btNumero1">
                       <Properties>
@@ -750,6 +834,9 @@
                         <Property name="text" type="java.lang.String" value="1"/>
                         <Property name="toolTipText" type="java.lang.String" value="Numero (35:1)"/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btNumero1ActionPerformed"/>
+                      </Events>
                     </Component>
                     <Component class="javax.swing.JButton" name="btNumero4">
                       <Properties>
@@ -765,6 +852,9 @@
                         <Property name="text" type="java.lang.String" value="4"/>
                         <Property name="toolTipText" type="java.lang.String" value="Numero (35:1)"/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btNumero4ActionPerformed"/>
+                      </Events>
                     </Component>
                     <Component class="javax.swing.JButton" name="btNumero7">
                       <Properties>
@@ -780,6 +870,9 @@
                         <Property name="text" type="java.lang.String" value="7"/>
                         <Property name="toolTipText" type="java.lang.String" value="Numero (35:1)"/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btNumero7ActionPerformed"/>
+                      </Events>
                     </Component>
                     <Component class="javax.swing.JButton" name="btNumero10">
                       <Properties>
@@ -795,6 +888,9 @@
                         <Property name="text" type="java.lang.String" value="10"/>
                         <Property name="toolTipText" type="java.lang.String" value="Numero (35:1)"/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btNumero10ActionPerformed"/>
+                      </Events>
                     </Component>
                     <Component class="javax.swing.JButton" name="btNumero13">
                       <Properties>
@@ -810,6 +906,9 @@
                         <Property name="text" type="java.lang.String" value="13"/>
                         <Property name="toolTipText" type="java.lang.String" value="Numero (35:1)"/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btNumero13ActionPerformed"/>
+                      </Events>
                     </Component>
                     <Component class="javax.swing.JButton" name="btNumero16">
                       <Properties>
@@ -825,6 +924,9 @@
                         <Property name="text" type="java.lang.String" value="16"/>
                         <Property name="toolTipText" type="java.lang.String" value="Numero (35:1)"/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btNumero16ActionPerformed"/>
+                      </Events>
                     </Component>
                     <Component class="javax.swing.JButton" name="btNumero19">
                       <Properties>
@@ -840,6 +942,9 @@
                         <Property name="text" type="java.lang.String" value="19"/>
                         <Property name="toolTipText" type="java.lang.String" value="Numero (35:1)"/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btNumero19ActionPerformed"/>
+                      </Events>
                     </Component>
                     <Component class="javax.swing.JButton" name="btNumero22">
                       <Properties>
@@ -855,6 +960,9 @@
                         <Property name="text" type="java.lang.String" value="22"/>
                         <Property name="toolTipText" type="java.lang.String" value="Numero (35:1)"/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btNumero22ActionPerformed"/>
+                      </Events>
                     </Component>
                     <Component class="javax.swing.JButton" name="btNumero25">
                       <Properties>
@@ -870,6 +978,9 @@
                         <Property name="text" type="java.lang.String" value="25"/>
                         <Property name="toolTipText" type="java.lang.String" value="Numero (35:1)"/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btNumero25ActionPerformed"/>
+                      </Events>
                     </Component>
                     <Component class="javax.swing.JButton" name="btNumero28">
                       <Properties>
@@ -885,6 +996,9 @@
                         <Property name="text" type="java.lang.String" value="28"/>
                         <Property name="toolTipText" type="java.lang.String" value="Numero (35:1)"/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btNumero28ActionPerformed"/>
+                      </Events>
                     </Component>
                     <Component class="javax.swing.JButton" name="btNumero31">
                       <Properties>
@@ -900,6 +1014,9 @@
                         <Property name="text" type="java.lang.String" value="31"/>
                         <Property name="toolTipText" type="java.lang.String" value="Numero (35:1)"/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btNumero31ActionPerformed"/>
+                      </Events>
                     </Component>
                     <Component class="javax.swing.JButton" name="btNumero34">
                       <Properties>
@@ -1003,6 +1120,9 @@
                     <Property name="text" type="java.lang.String" value="0"/>
                     <Property name="toolTipText" type="java.lang.String" value="Numero (35:1)"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btNumero0ActionPerformed"/>
+                  </Events>
                 </Component>
                 <Container class="javax.swing.JPanel" name="panelDocenas">
                   <Properties>
@@ -1030,6 +1150,9 @@
                         <Property name="text" type="java.lang.String" value="1ra 12"/>
                         <Property name="toolTipText" type="java.lang.String" value="Columna (2:1)"/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btDocena1ActionPerformed"/>
+                      </Events>
                     </Component>
                     <Component class="javax.swing.JButton" name="btDocena2">
                       <Properties>
@@ -1042,9 +1165,12 @@
                         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                           <Color blue="0" green="0" red="0" type="rgb"/>
                         </Property>
-                        <Property name="text" type="java.lang.String" value="2ra 12"/>
+                        <Property name="text" type="java.lang.String" value="2da 12"/>
                         <Property name="toolTipText" type="java.lang.String" value="Columna (2:1)"/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btDocena2ActionPerformed"/>
+                      </Events>
                     </Component>
                     <Component class="javax.swing.JButton" name="btDocena3">
                       <Properties>
@@ -1060,6 +1186,9 @@
                         <Property name="text" type="java.lang.String" value="3ra 12"/>
                         <Property name="toolTipText" type="java.lang.String" value="Columna (2:1)"/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btDocena3ActionPerformed"/>
+                      </Events>
                     </Component>
                   </SubComponents>
                 </Container>
@@ -1089,6 +1218,9 @@
                         <Property name="text" type="java.lang.String" value="1 a 18"/>
                         <Property name="toolTipText" type="java.lang.String" value="Alto/Bajo (1:1)"/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btBajosActionPerformed"/>
+                      </Events>
                     </Component>
                     <Component class="javax.swing.JButton" name="btPar">
                       <Properties>
@@ -1104,6 +1236,9 @@
                         <Property name="text" type="java.lang.String" value="Par"/>
                         <Property name="toolTipText" type="java.lang.String" value="Par/Impar (1:1)"/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btParActionPerformed"/>
+                      </Events>
                     </Component>
                     <Component class="javax.swing.JButton" name="btRojo">
                       <Properties>
@@ -1153,6 +1288,9 @@
                         <Property name="text" type="java.lang.String" value="Impar"/>
                         <Property name="toolTipText" type="java.lang.String" value="Par/Impar (1:1)"/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btImparActionPerformed"/>
+                      </Events>
                     </Component>
                     <Component class="javax.swing.JButton" name="btAltos">
                       <Properties>
@@ -1168,6 +1306,9 @@
                         <Property name="text" type="java.lang.String" value="19 a 36"/>
                         <Property name="toolTipText" type="java.lang.String" value="Alto/Bajo (1:1)"/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btAltosActionPerformed"/>
+                      </Events>
                     </Component>
                   </SubComponents>
                 </Container>
@@ -1188,6 +1329,14 @@
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btCerrarActionPerformed"/>
           </Events>
+        </Component>
+        <Component class="javax.swing.JLabel" name="labelTiempo">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Dialog" size="24" style="1"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Tiempo de Apuestas: 15"/>
+          </Properties>
         </Component>
       </SubComponents>
     </Container>

@@ -14,9 +14,8 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.Random;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
@@ -36,6 +35,9 @@ public class Jugar extends javax.swing.JFrame implements Runnable {
     private Socket cliente;
     private DataInputStream entrada;
     private DataOutputStream salida;
+
+    //Botones numeros
+    public static ArrayList<JButton> botones;
 
     //Fichas
     private int fichas;
@@ -65,6 +67,44 @@ public class Jugar extends javax.swing.JFrame implements Runnable {
         }
         //Variable auxiliar para saber si hay apuestas en la mesa
         fichasPreApuesta = fichas;
+        botones = new ArrayList<JButton>();
+        botones.add(btNumero0);
+        botones.add(btNumero1);
+        botones.add(btNumero2);
+        botones.add(btNumero3);
+        botones.add(btNumero4);
+        botones.add(btNumero5);
+        botones.add(btNumero6);
+        botones.add(btNumero7);
+        botones.add(btNumero8);
+        botones.add(btNumero9);
+        botones.add(btNumero10);
+        botones.add(btNumero11);
+        botones.add(btNumero12);
+        botones.add(btNumero13);
+        botones.add(btNumero14);
+        botones.add(btNumero15);
+        botones.add(btNumero16);
+        botones.add(btNumero17);
+        botones.add(btNumero18);
+        botones.add(btNumero19);
+        botones.add(btNumero20);
+        botones.add(btNumero21);
+        botones.add(btNumero22);
+        botones.add(btNumero23);
+        botones.add(btNumero24);
+        botones.add(btNumero25);
+        botones.add(btNumero26);
+        botones.add(btNumero27);
+        botones.add(btNumero28);
+        botones.add(btNumero29);
+        botones.add(btNumero30);
+        botones.add(btNumero31);
+        botones.add(btNumero32);
+        botones.add(btNumero33);
+        botones.add(btNumero34);
+        botones.add(btNumero35);
+        botones.add(btNumero36);
 
         labelFichas.setText("Fichas: " + fichas);
 
@@ -164,6 +204,7 @@ public class Jugar extends javax.swing.JFrame implements Runnable {
         btImpar = new javax.swing.JButton();
         btAltos = new javax.swing.JButton();
         btCerrar = new javax.swing.JButton();
+        labelTiempo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -301,6 +342,11 @@ public class Jugar extends javax.swing.JFrame implements Runnable {
         btNumero3.setForeground(new java.awt.Color(255, 255, 255));
         btNumero3.setText("3");
         btNumero3.setToolTipText("Numero (35:1)");
+        btNumero3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btNumero3ActionPerformed(evt);
+            }
+        });
         panelNumeros.add(btNumero3);
 
         btNumero6.setBackground(new java.awt.Color(0, 0, 0));
@@ -308,6 +354,11 @@ public class Jugar extends javax.swing.JFrame implements Runnable {
         btNumero6.setForeground(new java.awt.Color(255, 255, 255));
         btNumero6.setText("6");
         btNumero6.setToolTipText("Numero (35:1)");
+        btNumero6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btNumero6ActionPerformed(evt);
+            }
+        });
         panelNumeros.add(btNumero6);
 
         btNumero9.setBackground(new java.awt.Color(255, 0, 0));
@@ -315,6 +366,11 @@ public class Jugar extends javax.swing.JFrame implements Runnable {
         btNumero9.setForeground(new java.awt.Color(255, 255, 255));
         btNumero9.setText("9");
         btNumero9.setToolTipText("Numero (35:1)");
+        btNumero9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btNumero9ActionPerformed(evt);
+            }
+        });
         panelNumeros.add(btNumero9);
 
         btNumero12.setBackground(new java.awt.Color(255, 0, 0));
@@ -322,6 +378,11 @@ public class Jugar extends javax.swing.JFrame implements Runnable {
         btNumero12.setForeground(new java.awt.Color(255, 255, 255));
         btNumero12.setText("12");
         btNumero12.setToolTipText("Numero (35:1)");
+        btNumero12.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btNumero12ActionPerformed(evt);
+            }
+        });
         panelNumeros.add(btNumero12);
 
         btNumero15.setBackground(new java.awt.Color(0, 0, 0));
@@ -329,6 +390,11 @@ public class Jugar extends javax.swing.JFrame implements Runnable {
         btNumero15.setForeground(new java.awt.Color(255, 255, 255));
         btNumero15.setText("15");
         btNumero15.setToolTipText("Numero (35:1)");
+        btNumero15.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btNumero15ActionPerformed(evt);
+            }
+        });
         panelNumeros.add(btNumero15);
 
         btNumero18.setBackground(new java.awt.Color(255, 0, 0));
@@ -336,6 +402,11 @@ public class Jugar extends javax.swing.JFrame implements Runnable {
         btNumero18.setForeground(new java.awt.Color(255, 255, 255));
         btNumero18.setText("18");
         btNumero18.setToolTipText("Numero (35:1)");
+        btNumero18.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btNumero18ActionPerformed(evt);
+            }
+        });
         panelNumeros.add(btNumero18);
 
         btNumero21.setBackground(new java.awt.Color(255, 0, 0));
@@ -343,6 +414,11 @@ public class Jugar extends javax.swing.JFrame implements Runnable {
         btNumero21.setForeground(new java.awt.Color(255, 255, 255));
         btNumero21.setText("21");
         btNumero21.setToolTipText("Numero (35:1)");
+        btNumero21.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btNumero21ActionPerformed(evt);
+            }
+        });
         panelNumeros.add(btNumero21);
 
         btNumero24.setBackground(new java.awt.Color(0, 0, 0));
@@ -350,6 +426,11 @@ public class Jugar extends javax.swing.JFrame implements Runnable {
         btNumero24.setForeground(new java.awt.Color(255, 255, 255));
         btNumero24.setText("24");
         btNumero24.setToolTipText("Numero (35:1)");
+        btNumero24.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btNumero24ActionPerformed(evt);
+            }
+        });
         panelNumeros.add(btNumero24);
 
         btNumero27.setBackground(new java.awt.Color(255, 0, 0));
@@ -357,6 +438,11 @@ public class Jugar extends javax.swing.JFrame implements Runnable {
         btNumero27.setForeground(new java.awt.Color(255, 255, 255));
         btNumero27.setText("27");
         btNumero27.setToolTipText("Numero (35:1)");
+        btNumero27.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btNumero27ActionPerformed(evt);
+            }
+        });
         panelNumeros.add(btNumero27);
 
         btNumero30.setBackground(new java.awt.Color(255, 0, 0));
@@ -364,6 +450,11 @@ public class Jugar extends javax.swing.JFrame implements Runnable {
         btNumero30.setForeground(new java.awt.Color(255, 255, 255));
         btNumero30.setText("30");
         btNumero30.setToolTipText("Numero (35:1)");
+        btNumero30.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btNumero30ActionPerformed(evt);
+            }
+        });
         panelNumeros.add(btNumero30);
 
         btNumero33.setBackground(new java.awt.Color(0, 0, 0));
@@ -371,6 +462,11 @@ public class Jugar extends javax.swing.JFrame implements Runnable {
         btNumero33.setForeground(new java.awt.Color(255, 255, 255));
         btNumero33.setText("33");
         btNumero33.setToolTipText("Numero (35:1)");
+        btNumero33.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btNumero33ActionPerformed(evt);
+            }
+        });
         panelNumeros.add(btNumero33);
 
         btNumero36.setBackground(new java.awt.Color(255, 0, 0));
@@ -378,6 +474,11 @@ public class Jugar extends javax.swing.JFrame implements Runnable {
         btNumero36.setForeground(new java.awt.Color(255, 255, 255));
         btNumero36.setText("36");
         btNumero36.setToolTipText("Numero (35:1)");
+        btNumero36.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btNumero36ActionPerformed(evt);
+            }
+        });
         panelNumeros.add(btNumero36);
 
         btNumero2.setBackground(new java.awt.Color(0, 0, 0));
@@ -385,6 +486,11 @@ public class Jugar extends javax.swing.JFrame implements Runnable {
         btNumero2.setForeground(new java.awt.Color(255, 255, 255));
         btNumero2.setText("2");
         btNumero2.setToolTipText("Numero (35:1)");
+        btNumero2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btNumero2ActionPerformed(evt);
+            }
+        });
         panelNumeros.add(btNumero2);
 
         btNumero5.setBackground(new java.awt.Color(255, 0, 0));
@@ -392,6 +498,11 @@ public class Jugar extends javax.swing.JFrame implements Runnable {
         btNumero5.setForeground(new java.awt.Color(255, 255, 255));
         btNumero5.setText("5");
         btNumero5.setToolTipText("Numero (35:1)");
+        btNumero5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btNumero5ActionPerformed(evt);
+            }
+        });
         panelNumeros.add(btNumero5);
 
         btNumero8.setBackground(new java.awt.Color(0, 0, 0));
@@ -399,6 +510,11 @@ public class Jugar extends javax.swing.JFrame implements Runnable {
         btNumero8.setForeground(new java.awt.Color(255, 255, 255));
         btNumero8.setText("8");
         btNumero8.setToolTipText("Numero (35:1)");
+        btNumero8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btNumero8ActionPerformed(evt);
+            }
+        });
         panelNumeros.add(btNumero8);
 
         btNumero11.setBackground(new java.awt.Color(0, 0, 0));
@@ -406,6 +522,11 @@ public class Jugar extends javax.swing.JFrame implements Runnable {
         btNumero11.setForeground(new java.awt.Color(255, 255, 255));
         btNumero11.setText("11");
         btNumero11.setToolTipText("Numero (35:1)");
+        btNumero11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btNumero11ActionPerformed(evt);
+            }
+        });
         panelNumeros.add(btNumero11);
 
         btNumero14.setBackground(new java.awt.Color(255, 0, 0));
@@ -413,6 +534,11 @@ public class Jugar extends javax.swing.JFrame implements Runnable {
         btNumero14.setForeground(new java.awt.Color(255, 255, 255));
         btNumero14.setText("14");
         btNumero14.setToolTipText("Numero (35:1)");
+        btNumero14.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btNumero14ActionPerformed(evt);
+            }
+        });
         panelNumeros.add(btNumero14);
 
         btNumero17.setBackground(new java.awt.Color(0, 0, 0));
@@ -420,6 +546,11 @@ public class Jugar extends javax.swing.JFrame implements Runnable {
         btNumero17.setForeground(new java.awt.Color(255, 255, 255));
         btNumero17.setText("17");
         btNumero17.setToolTipText("Numero (35:1)");
+        btNumero17.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btNumero17ActionPerformed(evt);
+            }
+        });
         panelNumeros.add(btNumero17);
 
         btNumero20.setBackground(new java.awt.Color(0, 0, 0));
@@ -427,6 +558,11 @@ public class Jugar extends javax.swing.JFrame implements Runnable {
         btNumero20.setForeground(new java.awt.Color(255, 255, 255));
         btNumero20.setText("20");
         btNumero20.setToolTipText("Numero (35:1)");
+        btNumero20.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btNumero20ActionPerformed(evt);
+            }
+        });
         panelNumeros.add(btNumero20);
 
         btNumero23.setBackground(new java.awt.Color(255, 0, 0));
@@ -434,6 +570,11 @@ public class Jugar extends javax.swing.JFrame implements Runnable {
         btNumero23.setForeground(new java.awt.Color(255, 255, 255));
         btNumero23.setText("23");
         btNumero23.setToolTipText("Numero (35:1)");
+        btNumero23.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btNumero23ActionPerformed(evt);
+            }
+        });
         panelNumeros.add(btNumero23);
 
         btNumero26.setBackground(new java.awt.Color(0, 0, 0));
@@ -441,6 +582,11 @@ public class Jugar extends javax.swing.JFrame implements Runnable {
         btNumero26.setForeground(new java.awt.Color(255, 255, 255));
         btNumero26.setText("26");
         btNumero26.setToolTipText("Numero (35:1)");
+        btNumero26.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btNumero26ActionPerformed(evt);
+            }
+        });
         panelNumeros.add(btNumero26);
 
         btNumero29.setBackground(new java.awt.Color(0, 0, 0));
@@ -448,6 +594,11 @@ public class Jugar extends javax.swing.JFrame implements Runnable {
         btNumero29.setForeground(new java.awt.Color(255, 255, 255));
         btNumero29.setText("29");
         btNumero29.setToolTipText("Numero (35:1)");
+        btNumero29.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btNumero29ActionPerformed(evt);
+            }
+        });
         panelNumeros.add(btNumero29);
 
         btNumero32.setBackground(new java.awt.Color(255, 0, 0));
@@ -455,6 +606,11 @@ public class Jugar extends javax.swing.JFrame implements Runnable {
         btNumero32.setForeground(new java.awt.Color(255, 255, 255));
         btNumero32.setText("32");
         btNumero32.setToolTipText("Numero (35:1)");
+        btNumero32.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btNumero32ActionPerformed(evt);
+            }
+        });
         panelNumeros.add(btNumero32);
 
         btNumero35.setBackground(new java.awt.Color(0, 0, 0));
@@ -462,6 +618,11 @@ public class Jugar extends javax.swing.JFrame implements Runnable {
         btNumero35.setForeground(new java.awt.Color(255, 255, 255));
         btNumero35.setText("35");
         btNumero35.setToolTipText("Numero (35:1)");
+        btNumero35.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btNumero35ActionPerformed(evt);
+            }
+        });
         panelNumeros.add(btNumero35);
 
         btNumero1.setBackground(new java.awt.Color(255, 0, 0));
@@ -469,6 +630,11 @@ public class Jugar extends javax.swing.JFrame implements Runnable {
         btNumero1.setForeground(new java.awt.Color(255, 255, 255));
         btNumero1.setText("1");
         btNumero1.setToolTipText("Numero (35:1)");
+        btNumero1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btNumero1ActionPerformed(evt);
+            }
+        });
         panelNumeros.add(btNumero1);
 
         btNumero4.setBackground(new java.awt.Color(0, 0, 0));
@@ -476,6 +642,11 @@ public class Jugar extends javax.swing.JFrame implements Runnable {
         btNumero4.setForeground(new java.awt.Color(255, 255, 255));
         btNumero4.setText("4");
         btNumero4.setToolTipText("Numero (35:1)");
+        btNumero4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btNumero4ActionPerformed(evt);
+            }
+        });
         panelNumeros.add(btNumero4);
 
         btNumero7.setBackground(new java.awt.Color(255, 0, 0));
@@ -483,6 +654,11 @@ public class Jugar extends javax.swing.JFrame implements Runnable {
         btNumero7.setForeground(new java.awt.Color(255, 255, 255));
         btNumero7.setText("7");
         btNumero7.setToolTipText("Numero (35:1)");
+        btNumero7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btNumero7ActionPerformed(evt);
+            }
+        });
         panelNumeros.add(btNumero7);
 
         btNumero10.setBackground(new java.awt.Color(0, 0, 0));
@@ -490,6 +666,11 @@ public class Jugar extends javax.swing.JFrame implements Runnable {
         btNumero10.setForeground(new java.awt.Color(255, 255, 255));
         btNumero10.setText("10");
         btNumero10.setToolTipText("Numero (35:1)");
+        btNumero10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btNumero10ActionPerformed(evt);
+            }
+        });
         panelNumeros.add(btNumero10);
 
         btNumero13.setBackground(new java.awt.Color(0, 0, 0));
@@ -497,6 +678,11 @@ public class Jugar extends javax.swing.JFrame implements Runnable {
         btNumero13.setForeground(new java.awt.Color(255, 255, 255));
         btNumero13.setText("13");
         btNumero13.setToolTipText("Numero (35:1)");
+        btNumero13.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btNumero13ActionPerformed(evt);
+            }
+        });
         panelNumeros.add(btNumero13);
 
         btNumero16.setBackground(new java.awt.Color(255, 0, 0));
@@ -504,6 +690,11 @@ public class Jugar extends javax.swing.JFrame implements Runnable {
         btNumero16.setForeground(new java.awt.Color(255, 255, 255));
         btNumero16.setText("16");
         btNumero16.setToolTipText("Numero (35:1)");
+        btNumero16.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btNumero16ActionPerformed(evt);
+            }
+        });
         panelNumeros.add(btNumero16);
 
         btNumero19.setBackground(new java.awt.Color(255, 0, 0));
@@ -511,6 +702,11 @@ public class Jugar extends javax.swing.JFrame implements Runnable {
         btNumero19.setForeground(new java.awt.Color(255, 255, 255));
         btNumero19.setText("19");
         btNumero19.setToolTipText("Numero (35:1)");
+        btNumero19.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btNumero19ActionPerformed(evt);
+            }
+        });
         panelNumeros.add(btNumero19);
 
         btNumero22.setBackground(new java.awt.Color(0, 0, 0));
@@ -518,6 +714,11 @@ public class Jugar extends javax.swing.JFrame implements Runnable {
         btNumero22.setForeground(new java.awt.Color(255, 255, 255));
         btNumero22.setText("22");
         btNumero22.setToolTipText("Numero (35:1)");
+        btNumero22.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btNumero22ActionPerformed(evt);
+            }
+        });
         panelNumeros.add(btNumero22);
 
         btNumero25.setBackground(new java.awt.Color(255, 0, 0));
@@ -525,6 +726,11 @@ public class Jugar extends javax.swing.JFrame implements Runnable {
         btNumero25.setForeground(new java.awt.Color(255, 255, 255));
         btNumero25.setText("25");
         btNumero25.setToolTipText("Numero (35:1)");
+        btNumero25.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btNumero25ActionPerformed(evt);
+            }
+        });
         panelNumeros.add(btNumero25);
 
         btNumero28.setBackground(new java.awt.Color(0, 0, 0));
@@ -532,6 +738,11 @@ public class Jugar extends javax.swing.JFrame implements Runnable {
         btNumero28.setForeground(new java.awt.Color(255, 255, 255));
         btNumero28.setText("28");
         btNumero28.setToolTipText("Numero (35:1)");
+        btNumero28.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btNumero28ActionPerformed(evt);
+            }
+        });
         panelNumeros.add(btNumero28);
 
         btNumero31.setBackground(new java.awt.Color(0, 0, 0));
@@ -539,6 +750,11 @@ public class Jugar extends javax.swing.JFrame implements Runnable {
         btNumero31.setForeground(new java.awt.Color(255, 255, 255));
         btNumero31.setText("31");
         btNumero31.setToolTipText("Numero (35:1)");
+        btNumero31.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btNumero31ActionPerformed(evt);
+            }
+        });
         panelNumeros.add(btNumero31);
 
         btNumero34.setBackground(new java.awt.Color(255, 0, 0));
@@ -597,6 +813,11 @@ public class Jugar extends javax.swing.JFrame implements Runnable {
         btNumero0.setForeground(new java.awt.Color(255, 255, 255));
         btNumero0.setText("0");
         btNumero0.setToolTipText("Numero (35:1)");
+        btNumero0.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btNumero0ActionPerformed(evt);
+            }
+        });
 
         panelDocenas.setBackground(new java.awt.Color(102, 255, 102));
         panelDocenas.setLayout(new java.awt.GridLayout(1, 3));
@@ -606,13 +827,23 @@ public class Jugar extends javax.swing.JFrame implements Runnable {
         btDocena1.setForeground(new java.awt.Color(0, 0, 0));
         btDocena1.setText("1ra 12");
         btDocena1.setToolTipText("Columna (2:1)");
+        btDocena1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btDocena1ActionPerformed(evt);
+            }
+        });
         panelDocenas.add(btDocena1);
 
         btDocena2.setBackground(new java.awt.Color(153, 255, 153));
         btDocena2.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         btDocena2.setForeground(new java.awt.Color(0, 0, 0));
-        btDocena2.setText("2ra 12");
+        btDocena2.setText("2da 12");
         btDocena2.setToolTipText("Columna (2:1)");
+        btDocena2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btDocena2ActionPerformed(evt);
+            }
+        });
         panelDocenas.add(btDocena2);
 
         btDocena3.setBackground(new java.awt.Color(153, 255, 153));
@@ -620,6 +851,11 @@ public class Jugar extends javax.swing.JFrame implements Runnable {
         btDocena3.setForeground(new java.awt.Color(0, 0, 0));
         btDocena3.setText("3ra 12");
         btDocena3.setToolTipText("Columna (2:1)");
+        btDocena3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btDocena3ActionPerformed(evt);
+            }
+        });
         panelDocenas.add(btDocena3);
 
         panelColores.setBackground(new java.awt.Color(102, 255, 102));
@@ -630,6 +866,11 @@ public class Jugar extends javax.swing.JFrame implements Runnable {
         btBajos.setForeground(new java.awt.Color(0, 0, 0));
         btBajos.setText("1 a 18");
         btBajos.setToolTipText("Alto/Bajo (1:1)");
+        btBajos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btBajosActionPerformed(evt);
+            }
+        });
         panelColores.add(btBajos);
 
         btPar.setBackground(new java.awt.Color(153, 255, 153));
@@ -637,6 +878,11 @@ public class Jugar extends javax.swing.JFrame implements Runnable {
         btPar.setForeground(new java.awt.Color(0, 0, 0));
         btPar.setText("Par");
         btPar.setToolTipText("Par/Impar (1:1)");
+        btPar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btParActionPerformed(evt);
+            }
+        });
         panelColores.add(btPar);
 
         btRojo.setBackground(new java.awt.Color(255, 0, 0));
@@ -666,6 +912,11 @@ public class Jugar extends javax.swing.JFrame implements Runnable {
         btImpar.setForeground(new java.awt.Color(0, 0, 0));
         btImpar.setText("Impar");
         btImpar.setToolTipText("Par/Impar (1:1)");
+        btImpar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btImparActionPerformed(evt);
+            }
+        });
         panelColores.add(btImpar);
 
         btAltos.setBackground(new java.awt.Color(153, 255, 153));
@@ -673,6 +924,11 @@ public class Jugar extends javax.swing.JFrame implements Runnable {
         btAltos.setForeground(new java.awt.Color(0, 0, 0));
         btAltos.setText("19 a 36");
         btAltos.setToolTipText("Alto/Bajo (1:1)");
+        btAltos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btAltosActionPerformed(evt);
+            }
+        });
         panelColores.add(btAltos);
 
         javax.swing.GroupLayout panelMesaHijoLayout = new javax.swing.GroupLayout(panelMesaHijo);
@@ -728,28 +984,39 @@ public class Jugar extends javax.swing.JFrame implements Runnable {
             }
         });
 
+        labelTiempo.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        labelTiempo.setText("Tiempo de Apuestas: 15");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btCerrar, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(labelFichas)
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(panelLog, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(panelMesa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(panelFichas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(labelFichas)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(panelLog, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(panelMesa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(panelFichas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(labelTiempo, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btCerrar, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btCerrar, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btCerrar, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelTiempo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -852,6 +1119,7 @@ public class Jugar extends javax.swing.JFrame implements Runnable {
 
     private void btNumero34ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btNumero34ActionPerformed
         // TODO add your handling code here:
+        apostarNumero(34, btNumero34);
     }//GEN-LAST:event_btNumero34ActionPerformed
 
     private void btColumna1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btColumna1ActionPerformed
@@ -868,6 +1136,260 @@ public class Jugar extends javax.swing.JFrame implements Runnable {
         // TODO add your handling code here:
         apostarColumna(2, btColumna3);
     }//GEN-LAST:event_btColumna3ActionPerformed
+
+    private void btNumero1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btNumero1ActionPerformed
+        // TODO add your handling code here:
+        apostarNumero(1, btNumero1);
+    }//GEN-LAST:event_btNumero1ActionPerformed
+
+    private void btNumero2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btNumero2ActionPerformed
+        // TODO add your handling code here:
+        apostarNumero(2, btNumero2);
+    }//GEN-LAST:event_btNumero2ActionPerformed
+
+    private void btNumero3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btNumero3ActionPerformed
+        // TODO add your handling code here:
+        apostarNumero(3, btNumero3);
+    }//GEN-LAST:event_btNumero3ActionPerformed
+
+    private void btNumero0ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btNumero0ActionPerformed
+        // TODO add your handling code here:
+        apostarNumero(0, btNumero0);
+    }//GEN-LAST:event_btNumero0ActionPerformed
+
+    private void btNumero4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btNumero4ActionPerformed
+        // TODO add your handling code here:
+        apostarNumero(4, btNumero4);
+    }//GEN-LAST:event_btNumero4ActionPerformed
+
+    private void btNumero5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btNumero5ActionPerformed
+        // TODO add your handling code here:
+        apostarNumero(5, btNumero5);
+    }//GEN-LAST:event_btNumero5ActionPerformed
+
+    private void btNumero6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btNumero6ActionPerformed
+        // TODO add your handling code here:
+        apostarNumero(6, btNumero6);
+    }//GEN-LAST:event_btNumero6ActionPerformed
+
+    private void btNumero7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btNumero7ActionPerformed
+        // TODO add your handling code here:
+        apostarNumero(7, btNumero7);
+    }//GEN-LAST:event_btNumero7ActionPerformed
+
+    private void btNumero8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btNumero8ActionPerformed
+        // TODO add your handling code here:
+        apostarNumero(8, btNumero8);
+    }//GEN-LAST:event_btNumero8ActionPerformed
+
+    private void btNumero9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btNumero9ActionPerformed
+        // TODO add your handling code here:
+        apostarNumero(9, btNumero9);
+    }//GEN-LAST:event_btNumero9ActionPerformed
+
+    private void btNumero10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btNumero10ActionPerformed
+        // TODO add your handling code here:
+        apostarNumero(10, btNumero10);
+    }//GEN-LAST:event_btNumero10ActionPerformed
+
+    private void btNumero11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btNumero11ActionPerformed
+        // TODO add your handling code here:
+        apostarNumero(11, btNumero11);
+    }//GEN-LAST:event_btNumero11ActionPerformed
+
+    private void btNumero12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btNumero12ActionPerformed
+        // TODO add your handling code here:
+        apostarNumero(12, btNumero12);
+    }//GEN-LAST:event_btNumero12ActionPerformed
+
+    private void btNumero13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btNumero13ActionPerformed
+        // TODO add your handling code here:
+        apostarNumero(13, btNumero13);
+    }//GEN-LAST:event_btNumero13ActionPerformed
+
+    private void btNumero14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btNumero14ActionPerformed
+        // TODO add your handling code here:
+        apostarNumero(14, btNumero14);
+    }//GEN-LAST:event_btNumero14ActionPerformed
+
+    private void btNumero15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btNumero15ActionPerformed
+        // TODO add your handling code here:
+        apostarNumero(15, btNumero15);
+    }//GEN-LAST:event_btNumero15ActionPerformed
+
+    private void btNumero16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btNumero16ActionPerformed
+        // TODO add your handling code here:
+        apostarNumero(16, btNumero16);
+    }//GEN-LAST:event_btNumero16ActionPerformed
+
+    private void btNumero17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btNumero17ActionPerformed
+        // TODO add your handling code here:
+        apostarNumero(17, btNumero17);
+    }//GEN-LAST:event_btNumero17ActionPerformed
+
+    private void btNumero18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btNumero18ActionPerformed
+        // TODO add your handling code here:
+        apostarNumero(18, btNumero18);
+    }//GEN-LAST:event_btNumero18ActionPerformed
+
+    private void btNumero19ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btNumero19ActionPerformed
+        // TODO add your handling code here:
+        apostarNumero(19, btNumero19);
+    }//GEN-LAST:event_btNumero19ActionPerformed
+
+    private void btNumero20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btNumero20ActionPerformed
+        // TODO add your handling code here:
+        apostarNumero(20, btNumero20);
+    }//GEN-LAST:event_btNumero20ActionPerformed
+
+    private void btNumero21ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btNumero21ActionPerformed
+        // TODO add your handling code here:
+        apostarNumero(21, btNumero21);
+    }//GEN-LAST:event_btNumero21ActionPerformed
+
+    private void btNumero22ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btNumero22ActionPerformed
+        // TODO add your handling code here:
+        apostarNumero(22, btNumero22);
+    }//GEN-LAST:event_btNumero22ActionPerformed
+
+    private void btNumero23ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btNumero23ActionPerformed
+        // TODO add your handling code here:
+        apostarNumero(23, btNumero23);
+    }//GEN-LAST:event_btNumero23ActionPerformed
+
+    private void btNumero24ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btNumero24ActionPerformed
+        // TODO add your handling code here:
+        apostarNumero(24, btNumero24);
+    }//GEN-LAST:event_btNumero24ActionPerformed
+
+    private void btNumero25ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btNumero25ActionPerformed
+        // TODO add your handling code here:
+        apostarNumero(25, btNumero25);
+    }//GEN-LAST:event_btNumero25ActionPerformed
+
+    private void btNumero26ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btNumero26ActionPerformed
+        // TODO add your handling code here:
+        apostarNumero(26, btNumero26);
+    }//GEN-LAST:event_btNumero26ActionPerformed
+
+    private void btNumero27ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btNumero27ActionPerformed
+        // TODO add your handling code here:
+        apostarNumero(27, btNumero27);
+    }//GEN-LAST:event_btNumero27ActionPerformed
+
+    private void btNumero28ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btNumero28ActionPerformed
+        // TODO add your handling code here:
+        apostarNumero(28, btNumero28);
+    }//GEN-LAST:event_btNumero28ActionPerformed
+
+    private void btNumero29ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btNumero29ActionPerformed
+        // TODO add your handling code here:
+        apostarNumero(29, btNumero29);
+    }//GEN-LAST:event_btNumero29ActionPerformed
+
+    private void btNumero30ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btNumero30ActionPerformed
+        // TODO add your handling code here:
+        apostarNumero(30, btNumero30);
+    }//GEN-LAST:event_btNumero30ActionPerformed
+
+    private void btNumero31ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btNumero31ActionPerformed
+        // TODO add your handling code here:
+        apostarNumero(31, btNumero31);
+    }//GEN-LAST:event_btNumero31ActionPerformed
+
+    private void btNumero32ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btNumero32ActionPerformed
+        // TODO add your handling code here:
+        apostarNumero(32, btNumero32);
+    }//GEN-LAST:event_btNumero32ActionPerformed
+
+    private void btNumero33ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btNumero33ActionPerformed
+        // TODO add your handling code here:
+        apostarNumero(33, btNumero33);
+    }//GEN-LAST:event_btNumero33ActionPerformed
+
+    private void btNumero35ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btNumero35ActionPerformed
+        // TODO add your handling code here:
+        apostarNumero(35, btNumero35);
+    }//GEN-LAST:event_btNumero35ActionPerformed
+
+    private void btNumero36ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btNumero36ActionPerformed
+        // TODO add your handling code here:
+        apostarNumero(36, btNumero36);
+        for (JButton botone : botones) {
+            System.out.println(botone.getText());
+        }
+    }//GEN-LAST:event_btNumero36ActionPerformed
+
+    private void btDocena1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btDocena1ActionPerformed
+        // TODO add your handling code here:
+        apostarDocenas(0, btDocena1, "1ra 12");
+    }//GEN-LAST:event_btDocena1ActionPerformed
+
+    private void btDocena2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btDocena2ActionPerformed
+        // TODO add your handling code here:
+        apostarDocenas(1, btDocena2, "2da 12");
+    }//GEN-LAST:event_btDocena2ActionPerformed
+
+    private void btDocena3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btDocena3ActionPerformed
+        // TODO add your handling code here:
+        apostarDocenas(2, btDocena3, "3ra 12");
+    }//GEN-LAST:event_btDocena3ActionPerformed
+
+    private void btParActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btParActionPerformed
+        // TODO add your handling code here:
+        if (fichaSeleccionada == 0) {
+            fichas += apuestaPar;
+            apuestaPar = 0;
+            btPar.setText("<html>"
+                    + "  <h2 style=\"margin:0;\">Par</h2>"
+                    + "  <h5 style=\"margin:0;\"></h5>"
+                    + "</html>");
+            labelFichas.setText("Fichas: " + fichas);
+        } else if (fichaSeleccionada > fichas) {
+            JOptionPane.showMessageDialog(this, "No tiene suficientes fichas");
+        } else {
+            fichas -= fichaSeleccionada;
+            apuestaPar += fichaSeleccionada;
+            btPar.setText("<html>"
+                    + "  <h2 style=\"margin:0;\">Par</h2>"
+                    + "  <h5 style=\"margin:0;\">" + apuestaPar + "</h5>"
+                    + "</html>");
+            labelFichas.setText("Fichas: " + fichas);
+        }
+    }//GEN-LAST:event_btParActionPerformed
+
+    private void btImparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btImparActionPerformed
+        // TODO add your handling code here:
+        if (fichaSeleccionada == 0) {
+            fichas += apuestaImpar;
+            apuestaImpar = 0;
+            btImpar.setText("<html>"
+                    + "  <h2 style=\"margin:0;\">Impar</h2>"
+                    + "  <h5 style=\"margin:0;\"></h5>"
+                    + "</html>");
+            labelFichas.setText("Fichas: " + fichas);
+        } else if (fichaSeleccionada > fichas) {
+            JOptionPane.showMessageDialog(this, "No tiene suficientes fichas");
+        } else {
+            fichas -= fichaSeleccionada;
+            apuestaImpar += fichaSeleccionada;
+            btImpar.setText("<html>"
+                    + "  <h2 style=\"margin:0;\">Impar</h2>"
+                    + "  <h5 style=\"margin:0;\">" + apuestaImpar + "</h5>"
+                    + "</html>");
+            labelFichas.setText("Fichas: " + fichas);
+        }
+    }//GEN-LAST:event_btImparActionPerformed
+
+    private void btBajosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBajosActionPerformed
+        // TODO add your handling code here:
+        apostarBajoAlto(0, btBajos, "1 a 18");
+    }//GEN-LAST:event_btBajosActionPerformed
+
+    private void btAltosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAltosActionPerformed
+        // TODO add your handling code here:
+        apostarBajoAlto(1, btAltos, "19 a 36");
+    }//GEN-LAST:event_btAltosActionPerformed
     private static int getRandomNumberInRange(int min, int max) {
         //Devuelve un numero al azar entre el rango que se le proporciona
         if (min >= max) {
@@ -885,7 +1407,11 @@ public class Jugar extends javax.swing.JFrame implements Runnable {
             while (true) {
                 //Tiempo de apuestas
                 habilitar();
-                Thread.sleep(15000);
+                for (int i = 15; i > 0; i--) {
+                    labelTiempo.setText("Tiempo de Apuestas: " + i);
+                    Thread.sleep(1000);
+                }
+                labelTiempo.setText("Tiempo de Apuestas: 0");
                 deshabilitar();
                 Thread.sleep(3000);
 
@@ -920,19 +1446,94 @@ public class Jugar extends javax.swing.JFrame implements Runnable {
         btNumero0.setEnabled(true);
     }
 
+    public void apostarNumero(int num, JButton boton) {
+        //Apuesta a los numeros
+        if (fichaSeleccionada == 0) {
+            fichas += apuestaNumeros[num];
+            apuestaNumeros[num] = 0;
+            boton.setText("<html>"
+                    + "  <h2 style=\"margin:0;\">" + num + "</h2>"
+                    + "  <h5 style=\"margin:0;\"></h5>"
+                    + "</html>");
+            labelFichas.setText("Fichas: " + fichas);
+        } else if (fichaSeleccionada > fichas) {
+            JOptionPane.showMessageDialog(this, "No tiene suficientes fichas");
+        } else {
+            fichas -= fichaSeleccionada;
+            apuestaNumeros[num] += fichaSeleccionada;
+            boton.setText("<html>"
+                    + "  <h2 style=\"margin:0;\">" + num + "</h2>"
+                    + "  <h5 style=\"margin:0;\">" + apuestaNumeros[num] + "</h5>"
+                    + "</html>");
+            labelFichas.setText("Fichas: " + fichas);
+        }
+    }
+
     public void apostarColumna(int numCol, JButton boton) {
         //Apuesta a la columna seleccionada
         if (fichaSeleccionada == 0) {
             fichas += apuestaFilas[numCol];
             apuestaFilas[numCol] = 0;
-            boton.setText("");
+            boton.setText("<html>"
+                    + "  <h2 style=\"margin:0;\">2 TO 1</h2>"
+                    + "  <h5 style=\"margin:0;\"></h5>"
+                    + "</html>");
             labelFichas.setText("Fichas: " + fichas);
         } else if (fichaSeleccionada > fichas) {
             JOptionPane.showMessageDialog(this, "No tiene suficientes fichas");
         } else {
             fichas -= fichaSeleccionada;
             apuestaFilas[numCol] += fichaSeleccionada;
-            boton.setText("" + apuestaFilas[numCol]);
+            boton.setText("<html>"
+                    + "  <h2 style=\"margin:0;\">2 TO 1</h2>"
+                    + "  <h5 style=\"margin:0;\">" + apuestaFilas[numCol] + "</h5>"
+                    + "</html>");
+            labelFichas.setText("Fichas: " + fichas);
+        }
+    }
+
+    public void apostarDocenas(int numDocena, JButton boton, String label) {
+        //Apuesta a la columna seleccionada
+        if (fichaSeleccionada == 0) {
+            fichas += apuestaDocenas[numDocena];
+            apuestaDocenas[numDocena] = 0;
+            boton.setText("<html>"
+                    + "  <h2 style=\"margin:0;\">" + label + "</h2>"
+                    + "  <h5 style=\"margin:0;\"></h5>"
+                    + "</html>");
+            labelFichas.setText("Fichas: " + fichas);
+        } else if (fichaSeleccionada > fichas) {
+            JOptionPane.showMessageDialog(this, "No tiene suficientes fichas");
+        } else {
+            fichas -= fichaSeleccionada;
+            apuestaDocenas[numDocena] += fichaSeleccionada;
+            boton.setText("<html>"
+                    + "  <h2 style=\"margin:0;\">" + label + "</h2>"
+                    + "  <h5 style=\"margin:0;\">" + apuestaDocenas[numDocena] + "</h5>"
+                    + "</html>");
+            labelFichas.setText("Fichas: " + fichas);
+        }
+    }
+    
+    public void apostarBajoAlto(int numBajoAlto, JButton boton, String label) {
+        //Apuesta a la columna seleccionada
+        if (fichaSeleccionada == 0) {
+            fichas += apuestaBajo1Alto2[numBajoAlto];
+            apuestaBajo1Alto2[numBajoAlto] = 0;
+            boton.setText("<html>"
+                    + "  <h2 style=\"margin:0;\">" + label + "</h2>"
+                    + "  <h5 style=\"margin:0;\"></h5>"
+                    + "</html>");
+            labelFichas.setText("Fichas: " + fichas);
+        } else if (fichaSeleccionada > fichas) {
+            JOptionPane.showMessageDialog(this, "No tiene suficientes fichas");
+        } else {
+            fichas -= fichaSeleccionada;
+            apuestaBajo1Alto2[numBajoAlto] += fichaSeleccionada;
+            boton.setText("<html>"
+                    + "  <h2 style=\"margin:0;\">" + label + "</h2>"
+                    + "  <h5 style=\"margin:0;\">" + apuestaBajo1Alto2[numBajoAlto] + "</h5>"
+                    + "</html>");
             labelFichas.setText("Fichas: " + fichas);
         }
     }
@@ -941,10 +1542,26 @@ public class Jugar extends javax.swing.JFrame implements Runnable {
         //Limpia las labels de los botones de la mesa
         btNegro.setText("");
         btRojo.setText("");
-        for (Component c: panelColumnas.getComponents()) {
+        for (Component c : panelColumnas.getComponents()) {
             JButton boton = (JButton) c;
             boton.setText("2 TO 1");
         }
+
+        int contador = 0;
+        for (JButton b : botones) {
+            b.setText(contador + "");
+            contador++;
+        }
+        
+        btDocena1.setText("1ra 12");
+        btDocena2.setText("2da 12");
+        btDocena3.setText("3ra 12");
+        
+        btBajos.setText("1 a 18");
+        btAltos.setText("19 a 36");
+        
+        btPar.setText("Par");
+        btImpar.setText("Impar");
 
     }
 
@@ -1104,6 +1721,7 @@ public class Jugar extends javax.swing.JFrame implements Runnable {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel labelFichas;
+    private javax.swing.JLabel labelTiempo;
     private javax.swing.JPanel panelColores;
     private javax.swing.JPanel panelColumnas;
     private javax.swing.JPanel panelDocenas;
