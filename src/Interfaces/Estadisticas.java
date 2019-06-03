@@ -102,6 +102,7 @@ public class Estadisticas extends javax.swing.JFrame {
             }
         });
 
+        dcFechaFiltro.setBackground(new java.awt.Color(102, 255, 102));
         dcFechaFiltro.setDateFormatString("dd-MM-yyyy");
 
         btFiltrar.setText("Filtrar");
@@ -225,7 +226,6 @@ public class Estadisticas extends javax.swing.JFrame {
                     labelTotal.setText("Total de Ganancias: " + media);
                     labelMedia.setText("Media de Ganancias: " + media / numFilas);
                 } else {
-                    JOptionPane.showMessageDialog(this, "No se ha encontrado ningun dato", "Informacion", JOptionPane.INFORMATION_MESSAGE);
                     labelTotal.setText("Total de Ganancias: 0");
                     labelMedia.setText("Media de Ganancias: 0");
                 }

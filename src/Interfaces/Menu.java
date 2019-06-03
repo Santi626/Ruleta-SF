@@ -31,12 +31,12 @@ public class Menu extends javax.swing.JFrame {
      * Creates new form Menu
      */
     private Login l;
+//
+//    private Socket cliente;
+//    private DataInputStream entrada;
+//    private DataOutputStream salida;
 
-    private Socket cliente;
-    private DataInputStream entrada;
-    private DataOutputStream salida;
-
-    public Menu(Login l, Socket cliente) {
+    public Menu(Login l) {
 
         initComponents();
 
@@ -45,15 +45,15 @@ public class Menu extends javax.swing.JFrame {
         this.setIconImage(new ImageIcon(getClass().getResource("/Recursos/login.png")).getImage());
 
         this.l = l;
-        this.cliente = cliente;
+//        this.cliente = cliente;
 
-        try {
-            //Inicializa los flujos
-            entrada = new DataInputStream(cliente.getInputStream()); //Canal de entrada
-            salida = new DataOutputStream(cliente.getOutputStream()); //canal de salida
-        } catch (IOException ex) {
-            JOptionPane.showMessageDialog(this, "Ha habido un problema conectandose con el servidor");
-        }
+//        try {
+//            //Inicializa los flujos
+//            entrada = new DataInputStream(cliente.getInputStream()); //Canal de entrada
+//            salida = new DataOutputStream(cliente.getOutputStream()); //canal de salida
+//        } catch (IOException ex) {
+//            JOptionPane.showMessageDialog(this, "Ha habido un problema conectandose con el servidor");
+//        }
         
         if (GestorUsuarios.getUsuarioActivo() == null) {
             //Bloquea el boton de estadísticas
@@ -182,7 +182,7 @@ public class Menu extends javax.swing.JFrame {
 
     private void btJugarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btJugarActionPerformed
         // TODO add your handling code here:
-        Jugar j = new Jugar(this, cliente);
+        Jugar j = new Jugar(this);
         j.setVisible(true);
         //Hilo para iniciar la ventana
         Thread hilo = new Thread(j);

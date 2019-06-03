@@ -10,6 +10,7 @@ import java.awt.Color;
 import javax.swing.ImageIcon;
 import Clases.ErrorException;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -145,6 +146,7 @@ public class NuevoUsuario extends javax.swing.JFrame {
         jLabel6.setText("*Fecha de Nacimiento: ");
         jLabel6.setToolTipText("OBLIGATORIO");
 
+        jdFechaNacimiento.setBackground(new java.awt.Color(102, 255, 102));
         jdFechaNacimiento.setToolTipText("Fecha de nacimiento");
         jdFechaNacimiento.setDateFormatString("yyyy-MM-dd");
 
@@ -153,7 +155,7 @@ public class NuevoUsuario extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(30, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(25, 25, 25)
@@ -179,11 +181,8 @@ public class NuevoUsuario extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(tfUsuario)
                                 .addComponent(tfCorreo)
-                                .addComponent(jdFechaNacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(55, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1)
+                                .addComponent(jdFechaNacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addComponent(jLabel1))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -217,7 +216,7 @@ public class NuevoUsuario extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btCancelar)
                     .addComponent(btCrear))
-                .addContainerGap(38, Short.MAX_VALUE))
+                .addContainerGap(37, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -295,6 +294,26 @@ public class NuevoUsuario extends javax.swing.JFrame {
         }
     }
 
+    public boolean existeNombre(String nombre) {
+        //Comprueba si el nombre ya existe en la Base de Datos
+        try {
+            //Comprueba que el usuario esté en BBDD
+            PreparedStatement ps = null;
+            ResultSet rs = null;
+
+            ps = DataBase.getConexion().prepareStatement("select NOMBRE from usuario "
+                    + "where nombre = ?");
+            ps.setString(1, nombre);
+
+            rs = ps.executeQuery();
+
+            return rs.next();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+        return false;
+    }
+
     public void valida() throws ErrorException {
         //Valida los campos
         String password = "";
@@ -311,7 +330,13 @@ public class NuevoUsuario extends javax.swing.JFrame {
         if (tfUsuario.getText().length() == 0) {
             tfUsuario.requestFocus();
             throw new ErrorException("El nombre de usuario no puede estar vacio");
+        } else if (existeNombre(tfUsuario.getText())) {
+            tfUsuario.setText("");
+            tfUsuario.requestFocus();
+            throw new ErrorException("El nombre de usuario ya existe");
         } else if (tfCorreo.getText().length() != 0 && !tfCorreo.getText().matches(".+@.+\\..+")) {
+            tfCorreo.setText("");
+            tfCorreo.requestFocus();
             throw new ErrorException("El formato de correo no es correcto");
         } else if (jdFechaNacimiento.getDate() == null) {
             throw new ErrorException("La fecha de nacimiento no puede estar vacia");

@@ -32,9 +32,9 @@ public class Jugar extends javax.swing.JFrame implements Runnable {
     private Menu m;
     private int fichaSeleccionada;
 
-    private Socket cliente;
-    private DataInputStream entrada;
-    private DataOutputStream salida;
+//    private Socket cliente;
+//    private DataInputStream entrada;
+//    private DataOutputStream salida;
 
     //Botones numeros
     public static ArrayList<JButton> botones;
@@ -52,7 +52,7 @@ public class Jugar extends javax.swing.JFrame implements Runnable {
     private int[] apuestaFilas;
     private int[] apuestaNumeros;
 
-    public Jugar(Menu m, Socket cliente) {
+    public Jugar(Menu m) {
         initComponents();
 
         this.setLocationRelativeTo(null);
@@ -111,19 +111,19 @@ public class Jugar extends javax.swing.JFrame implements Runnable {
         //Inicializar variables
         this.m = m;
         fichaSeleccionada = 1;
-        this.cliente = cliente;
+//        this.cliente = cliente;
         this.apuestaDocenas = new int[3];
         this.apuestaBajo1Alto2 = new int[2];
         this.apuestaFilas = new int[3];
         this.apuestaNumeros = new int[37];
 
-        try {
-            //Inicializa los flujos
-            entrada = new DataInputStream(cliente.getInputStream()); //Canal de entrada
-            salida = new DataOutputStream(cliente.getOutputStream()); //canal de salida
-        } catch (IOException ex) {
-            JOptionPane.showMessageDialog(this, "Ha habido un problema conectandose con el servidor");
-        }
+//        try {
+//            //Inicializa los flujos
+//            entrada = new DataInputStream(cliente.getInputStream()); //Canal de entrada
+//            salida = new DataOutputStream(cliente.getOutputStream()); //canal de salida
+//        } catch (IOException ex) {
+//            JOptionPane.showMessageDialog(this, "Ha habido un problema conectandose con el servidor");
+//        }
     }
 
     /**
@@ -242,6 +242,7 @@ public class Jugar extends javax.swing.JFrame implements Runnable {
         tbFicha2.setBackground(new java.awt.Color(153, 255, 153));
         grupoFichas.add(tbFicha2);
         tbFicha2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/Ficha2.png"))); // NOI18N
+        tbFicha2.setToolTipText("Seleccionar ficha: 2");
         tbFicha2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tbFicha2ActionPerformed(evt);
@@ -252,6 +253,7 @@ public class Jugar extends javax.swing.JFrame implements Runnable {
         grupoFichas.add(tbFicha1);
         tbFicha1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/Ficha1.png"))); // NOI18N
         tbFicha1.setSelected(true);
+        tbFicha1.setToolTipText("Seleccionar ficha: 1");
         tbFicha1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tbFicha1ActionPerformed(evt);
@@ -261,6 +263,7 @@ public class Jugar extends javax.swing.JFrame implements Runnable {
         tbFicha5.setBackground(new java.awt.Color(153, 255, 153));
         grupoFichas.add(tbFicha5);
         tbFicha5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/Ficha5.png"))); // NOI18N
+        tbFicha5.setToolTipText("Seleccionar ficha: 5");
         tbFicha5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tbFicha5ActionPerformed(evt);
@@ -270,6 +273,7 @@ public class Jugar extends javax.swing.JFrame implements Runnable {
         tbFicha20.setBackground(new java.awt.Color(153, 255, 153));
         grupoFichas.add(tbFicha20);
         tbFicha20.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/Ficha20.png"))); // NOI18N
+        tbFicha20.setToolTipText("Seleccionar ficha: 20");
         tbFicha20.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tbFicha20ActionPerformed(evt);
@@ -279,6 +283,7 @@ public class Jugar extends javax.swing.JFrame implements Runnable {
         tbFicha100.setBackground(new java.awt.Color(153, 255, 153));
         grupoFichas.add(tbFicha100);
         tbFicha100.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/Ficha100.png"))); // NOI18N
+        tbFicha100.setToolTipText("Seleccionar ficha: 100");
         tbFicha100.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tbFicha100ActionPerformed(evt);
@@ -288,6 +293,7 @@ public class Jugar extends javax.swing.JFrame implements Runnable {
         tbFichaBorrar.setBackground(new java.awt.Color(153, 255, 153));
         grupoFichas.add(tbFichaBorrar);
         tbFichaBorrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/borrar.png"))); // NOI18N
+        tbFichaBorrar.setToolTipText("Borrar Apuesta");
         tbFichaBorrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tbFichaBorrarActionPerformed(evt);
@@ -1390,6 +1396,7 @@ public class Jugar extends javax.swing.JFrame implements Runnable {
         // TODO add your handling code here:
         apostarBajoAlto(1, btAltos, "19 a 36");
     }//GEN-LAST:event_btAltosActionPerformed
+    
     private static int getRandomNumberInRange(int min, int max) {
         //Devuelve un numero al azar entre el rango que se le proporciona
         if (min >= max) {
@@ -1585,23 +1592,18 @@ public class Jugar extends javax.swing.JFrame implements Runnable {
     }
 
     public void pagar(Resultado resultado) {
-        //Paga las ganancias
         int ganancias = 0;
 
         if (resultado.getNum() == 0) {
-            //Cero, gana la banca
             //Se paga el 0
             ganancias += (apuestaNumeros[0] * 36);
         } else {
-            //No ha salido el 0, se paga al usuario las ganancias
             //Numero (pleno)
             ganancias += (apuestaNumeros[resultado.getNum()] * 36);
             //Color
             if (resultado.getColor() == Color.RED) {
-                //ROJO, se pagan las ganancias
                 ganancias += (apuestaRojo * 2);
             } else {
-                //NEGRO, se pagan las ganancias
                 ganancias += (apuestaNegro * 2);
             }
             //Par/Impar

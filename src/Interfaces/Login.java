@@ -7,6 +7,7 @@ package Interfaces;
 
 import BaseDatos.DataBase;
 import Clases.ErrorException;
+import Clases.GestorMail;
 import Clases.GestorUsuarios;
 import Clases.Mesa;
 import Clases.Usuario;
@@ -15,9 +16,13 @@ import java.io.IOException;
 import java.net.Socket;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.mail.MessagingException;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
@@ -65,6 +70,12 @@ public class Login extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        panelFechaNacimiento = new javax.swing.JPanel();
+        dcFechaNacimiento = new com.toedter.calendar.JDateChooser();
+        jLabel4 = new javax.swing.JLabel();
+        panelCorreo = new javax.swing.JPanel();
+        jLabel5 = new javax.swing.JLabel();
+        tfCorreo = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         btEntrarComoInvitado = new javax.swing.JButton();
@@ -77,6 +88,58 @@ public class Login extends javax.swing.JFrame {
         btEntrar = new javax.swing.JButton();
         labelOlvidarContrasena = new javax.swing.JLabel();
         labelCrearCuenta = new javax.swing.JLabel();
+
+        panelFechaNacimiento.setToolTipText("");
+
+        dcFechaNacimiento.setDateFormatString("yyyy-MM-dd");
+
+        jLabel4.setText("*Fecha de Nacimiento: ");
+
+        javax.swing.GroupLayout panelFechaNacimientoLayout = new javax.swing.GroupLayout(panelFechaNacimiento);
+        panelFechaNacimiento.setLayout(panelFechaNacimientoLayout);
+        panelFechaNacimientoLayout.setHorizontalGroup(
+            panelFechaNacimientoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelFechaNacimientoLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel4)
+                .addGap(29, 29, 29)
+                .addComponent(dcFechaNacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        panelFechaNacimientoLayout.setVerticalGroup(
+            panelFechaNacimientoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelFechaNacimientoLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(panelFechaNacimientoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(dcFechaNacimiento, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jLabel5.setText("*Correo: ");
+
+        tfCorreo.setToolTipText("Escriba el correo del usuario");
+
+        javax.swing.GroupLayout panelCorreoLayout = new javax.swing.GroupLayout(panelCorreo);
+        panelCorreo.setLayout(panelCorreoLayout);
+        panelCorreoLayout.setHorizontalGroup(
+            panelCorreoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelCorreoLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tfCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        panelCorreoLayout.setVerticalGroup(
+            panelCorreoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelCorreoLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(panelCorreoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(tfCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -142,6 +205,11 @@ public class Login extends javax.swing.JFrame {
 
         labelOlvidarContrasena.setForeground(new java.awt.Color(0, 153, 153));
         labelOlvidarContrasena.setText("¿Olvidó su contraseña?");
+        labelOlvidarContrasena.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                labelOlvidarContrasenaMouseClicked(evt);
+            }
+        });
 
         labelCrearCuenta.setForeground(new java.awt.Color(0, 153, 153));
         labelCrearCuenta.setText("Crear Cuenta");
@@ -163,15 +231,11 @@ public class Login extends javax.swing.JFrame {
                         .addGap(60, 60, 60)
                         .addComponent(btEntrarComoInvitado))
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jLabel2)))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btCerrar)))
+                            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btCerrar, javax.swing.GroupLayout.Alignment.TRAILING))
                         .addGap(32, 32, 32)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -271,7 +335,18 @@ public class Login extends javax.swing.JFrame {
 
     private void btEntrarComoInvitadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btEntrarComoInvitadoActionPerformed
         // TODO add your handling code here:
-        entrarComoInvitado();
+        Object[] options = {"Aceptar"};
+        int seleccion = JOptionPane.showOptionDialog(this, panelFechaNacimiento, "Introduzca su fecha de nacimiento",
+                JOptionPane.PLAIN_MESSAGE, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+        if (seleccion != -1) {
+            if (dcFechaNacimiento.getDate() != null
+                    && calculateAge(dcFechaNacimiento.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), LocalDate.now()) >= 18) {
+                entrarComoInvitado();
+            } else {
+                JOptionPane.showMessageDialog(this, "Debes ser mayor de 18 años para acceder a esta aplicación.");
+            }
+        }
+        dcFechaNacimiento.setDate(null);
     }//GEN-LAST:event_btEntrarComoInvitadoActionPerformed
 
     private void labelCrearCuentaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelCrearCuentaMouseClicked
@@ -281,6 +356,43 @@ public class Login extends javax.swing.JFrame {
         nu.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_labelCrearCuentaMouseClicked
+
+    private void labelOlvidarContrasenaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelOlvidarContrasenaMouseClicked
+        // TODO add your handling code here:
+        //Manda correo al usuario
+        Usuario u = existeUsuario(tfUsuario.getText());
+        
+        if (u != null && u.getCorreo() != null) {
+            Object[] options = {"Aceptar"};
+            int seleccion = JOptionPane.showOptionDialog(this, panelCorreo, "Introduzca el correo electronico de este usuario",
+                    JOptionPane.PLAIN_MESSAGE, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+            if (seleccion != -1) {
+                if (tfCorreo.getText().equals(u.getCorreo())) {
+                    try {
+                        GestorMail.enviarMail(tfCorreo.getText(), u);
+                        JOptionPane.showMessageDialog(this, "Se ha enviado la contraseña a su mail");
+                    } catch (MessagingException ex) {
+                        JOptionPane.showMessageDialog(this, "Ha habido un problema enviando el correo");
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(this, "El correo introducido no es correcto");
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "No existe este usuario o no se puede enviar un correo a su email");
+        }
+
+        tfCorreo.setText("");
+    }//GEN-LAST:event_labelOlvidarContrasenaMouseClicked
+
+    public static int calculateAge(LocalDate birthDate, LocalDate currentDate) {
+        //Calcular edad de usuario
+        if ((birthDate != null) && (currentDate != null)) {
+            return Period.between(birthDate, currentDate).getYears();
+        } else {
+            return 0;
+        }
+    }
 
     public void actualizarFechaUltimaConexion(int id) {
         //Actualiza la fecha de ultima conexion del usuario
@@ -300,6 +412,27 @@ public class Login extends javax.swing.JFrame {
         }
     }
 
+    public Usuario existeUsuario(String nombre) {
+        try {
+            //Comprueba que el usuario esté en BBDD
+            PreparedStatement ps = null;
+            ResultSet rs = null;
+
+            ps = DataBase.getConexion().prepareStatement("select * from usuario "
+                    + "where nombre = ?");
+            ps.setString(1, nombre);
+
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                return new Usuario(rs.getString("NOMBRE"), rs.getString("CORREO"), rs.getString("CONTRASENA"));
+            }
+            return null;
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+        return null;
+    }
+
     public boolean comprobarDatos(String nombre, String password) {
         try {
             //Comprueba que el usuario esté en BBDD
@@ -315,8 +448,6 @@ public class Login extends javax.swing.JFrame {
 
             if (rs.next()) {
                 GestorUsuarios.setUsuarioActivo(new Usuario(rs.getInt("IDUSUARIO"), rs.getString("NOMBRE"), new Date(), rs.getInt("FICHAS")));
-//                System.out.println("usuario: " + GestorUsuarios.getUsuarioActivo().getNombre() + "\nfechaConexion: "
-//                        + GestorUsuarios.getUsuarioActivo().getFechaUltimaConexion() + "\nfichas: " + GestorUsuarios.getUsuarioActivo().getFichasFinales());
                 return true;
             } else {
                 return false;
@@ -328,51 +459,47 @@ public class Login extends javax.swing.JFrame {
     }
 
     public void aceptar() {
-        try {
-            //Entra con usuario a la aplicación
-            //Construye la contraseña
-            String password = "";
-            for (int i = 0; i < tfPassword.getPassword().length; i++) {
-                password += tfPassword.getPassword()[i];
-            }
+        //Entra con usuario a la aplicación
+        //Construye la contraseña
+        String password = "";
+        for (int i = 0; i < tfPassword.getPassword().length; i++) {
+            password += tfPassword.getPassword()[i];
+        }
 
-            tfPassword.setText("");
-            //Crea la conexion con el servidor
-            cliente = new Socket(ip, puerto);
-            //Comprueba que los datos son correctos
-            if (comprobarDatos(tfUsuario.getText(), password)) {
-                //Conexion correcta
-                //Entra como usuario
+        tfPassword.setText("");
+//            //Crea la conexion con el servidor
+//            cliente = new Socket(ip, puerto);
+        //Comprueba que los datos son correctos
+        if (comprobarDatos(tfUsuario.getText(), password)) {
+            //Conexion correcta
+            //Entra como usuario
 
-                //Update de ultimo dia de conexión
-                actualizarFechaUltimaConexion(GestorUsuarios.getUsuarioActivo().getId());
-                Menu m = new Menu(this, cliente);
-                m.setVisible(true);
-                this.setVisible(false);
-            } else {
-                //Conexion fallida
-                JOptionPane.showMessageDialog(this, "Nombre de usuario o contraseña incorrectos");
-            }
-        } catch (IOException ex) {
-            JOptionPane.showMessageDialog(this, ex.getMessage());
+            //Update de ultimo dia de conexión
+            actualizarFechaUltimaConexion(GestorUsuarios.getUsuarioActivo().getId());
+            Menu m = new Menu(this);
+            m.setVisible(true);
+            this.setVisible(false);
+        } else {
+            //Conexion fallida
+            JOptionPane.showMessageDialog(this, "Nombre de usuario o contraseña incorrectos");
         }
     }
 
     public void entrarComoInvitado() {
-        try {
-            //Crea la conexion con el servidor
-            cliente = new Socket(ip, puerto);
+//        try {
+//            //Crea la conexion con el servidor
+//            cliente = new Socket(ip, puerto);
             //Entra con un usuario de prueba
             GestorUsuarios.setUsuarioActivo(null);
 
-            Menu m = new Menu(this, cliente);
+            Menu m = new Menu(this);
             m.setVisible(true);
             this.setVisible(false);
-        } catch (IOException ex) {
-            JOptionPane.showMessageDialog(this, ex.getMessage());
-        }
+//        } catch (IOException ex) {
+//            JOptionPane.showMessageDialog(this, ex.getMessage());
+//        }
     }
-    
+
     public void setParametros(String nombre, String password) {
         //Escribe parametros en los TF
         tfUsuario.setText(nombre);
@@ -419,12 +546,18 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JButton btEntrar;
     private javax.swing.JButton btEntrarComoInvitado;
     private javax.swing.JCheckBox cbMostrarPassword;
+    private com.toedter.calendar.JDateChooser dcFechaNacimiento;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel labelCrearCuenta;
     private javax.swing.JLabel labelOlvidarContrasena;
+    private javax.swing.JPanel panelCorreo;
+    private javax.swing.JPanel panelFechaNacimiento;
+    private javax.swing.JTextField tfCorreo;
     private javax.swing.JPasswordField tfPassword;
     private javax.swing.JTextField tfUsuario;
     // End of variables declaration//GEN-END:variables

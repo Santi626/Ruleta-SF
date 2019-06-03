@@ -210,6 +210,7 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/Recursos/Ficha2.png"/>
                 </Property>
+                <Property name="toolTipText" type="java.lang.String" value="Seleccionar ficha: 2"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tbFicha2ActionPerformed"/>
@@ -227,6 +228,7 @@
                   <Image iconType="3" name="/Recursos/Ficha1.png"/>
                 </Property>
                 <Property name="selected" type="boolean" value="true"/>
+                <Property name="toolTipText" type="java.lang.String" value="Seleccionar ficha: 1"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tbFicha1ActionPerformed"/>
@@ -243,6 +245,7 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/Recursos/Ficha5.png"/>
                 </Property>
+                <Property name="toolTipText" type="java.lang.String" value="Seleccionar ficha: 5"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tbFicha5ActionPerformed"/>
@@ -259,6 +262,7 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/Recursos/Ficha20.png"/>
                 </Property>
+                <Property name="toolTipText" type="java.lang.String" value="Seleccionar ficha: 20"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tbFicha20ActionPerformed"/>
@@ -275,6 +279,7 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/Recursos/Ficha100.png"/>
                 </Property>
+                <Property name="toolTipText" type="java.lang.String" value="Seleccionar ficha: 100"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tbFicha100ActionPerformed"/>
@@ -291,6 +296,7 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/Recursos/borrar.png"/>
                 </Property>
+                <Property name="toolTipText" type="java.lang.String" value="Borrar Apuesta"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tbFichaBorrarActionPerformed"/>
