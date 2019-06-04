@@ -38,7 +38,7 @@ public class NuevoUsuario extends javax.swing.JFrame {
         this.l = l;
 
         this.setLocationRelativeTo(null);
-        this.setTitle("Ruleta SF - Iniciar Sesión");
+        this.setTitle("Ruleta SF - Registrarse");
         this.setIconImage(new ImageIcon(getClass().getResource("/Recursos/login.png")).getImage());
     }
 

@@ -56,8 +56,8 @@ public class Jugar extends javax.swing.JFrame implements Runnable {
         initComponents();
 
         this.setLocationRelativeTo(null);
-        this.setTitle("Ruleta SF - Menú Principal");
-        this.setIconImage(new ImageIcon(getClass().getResource("/Recursos/login.png")).getImage());
+        this.setTitle("Ruleta SF - Jugar");
+        this.setIconImage(new ImageIcon(getClass().getResource("/Recursos/Logo.png")).getImage());
 
         //Si el usuario es un usuario invitado se le proporcionan 100 fichas
         if (GestorUsuarios.getUsuarioActivo() == null) {

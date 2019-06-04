@@ -35,8 +35,8 @@ public class Estadisticas extends javax.swing.JFrame {
         modeloTabla = (DefaultTableModel) tablaEstadisticas.getModel();
 
         this.setLocationRelativeTo(null);
-        this.setTitle("Ruleta SF - Iniciar Sesión");
-        this.setIconImage(new ImageIcon(getClass().getResource("/Recursos/login.png")).getImage());
+        this.setTitle("Ruleta SF - Estadísticas");
+        this.setIconImage(new ImageIcon(getClass().getResource("/Recursos/Logo.png")).getImage());
 
         cargaTabla(null);
     }

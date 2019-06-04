@@ -16,9 +16,11 @@ import java.io.IOException;
 import java.net.Socket;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.ZoneId;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -361,7 +363,7 @@ public class Login extends javax.swing.JFrame {
         // TODO add your handling code here:
         //Manda correo al usuario
         Usuario u = existeUsuario(tfUsuario.getText());
-        
+
         if (u != null && u.getCorreo() != null) {
             Object[] options = {"Aceptar"};
             int seleccion = JOptionPane.showOptionDialog(this, panelCorreo, "Introduzca el correo electronico de este usuario",
@@ -394,21 +396,34 @@ public class Login extends javax.swing.JFrame {
         }
     }
 
-    public void actualizarFechaUltimaConexion(int id) {
+    public void actualizarFechaUltimaConexion() {
         //Actualiza la fecha de ultima conexion del usuario
-        try {
-            PreparedStatement ps = null;
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String today = sdf.format(Calendar.getInstance().getTime());
 
-            ps = DataBase.getConexion().prepareStatement("update usuario "
-                    + "set FECHAULTIMACONEXION = SYSDATE "
-                    + "where IDUSUARIO = ?");
-            ps.setInt(1, id);
+        if (!GestorUsuarios.getUsuarioActivo().getFechaUltimaConexion().toString().equals(today)) {
+            //La fecha de ultima conexion no es de "hoy"
+            try {
+                PreparedStatement ps = null;
 
-            //Ejecuta
-            DataBase.ejecutaUpdateSeguro(ps);
+                ps = DataBase.getConexion().prepareStatement("update USUARIO "
+                        + "set FECHAULTIMACONEXION = SYSDATE, FICHAS = ? "
+                        + "where IDUSUARIO = ?");
 
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Problemas actualizando la fecha de conexión");
+                int fichas = GestorUsuarios.getUsuarioActivo().getFichasIniciales() + 1000;
+                GestorUsuarios.getUsuarioActivo().setFichasIniciales(fichas);
+                GestorUsuarios.getUsuarioActivo().setFichasFinales(fichas);
+                ps.setInt(1, fichas);
+                ps.setInt(2, GestorUsuarios.getUsuarioActivo().getId());
+
+                //Ejecuta
+                DataBase.ejecutaUpdateSeguro(ps);
+                
+                JOptionPane.showMessageDialog(this, "Has conseguido 1000 fichas por conectarte hoy!");
+
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Problemas actualizando la fecha de conexión");
+            }
         }
     }
 
@@ -447,7 +462,8 @@ public class Login extends javax.swing.JFrame {
             rs = ps.executeQuery();
 
             if (rs.next()) {
-                GestorUsuarios.setUsuarioActivo(new Usuario(rs.getInt("IDUSUARIO"), rs.getString("NOMBRE"), new Date(), rs.getInt("FICHAS")));
+                GestorUsuarios.setUsuarioActivo(new Usuario(rs.getInt("IDUSUARIO"),
+                        rs.getString("NOMBRE"), rs.getDate("FECHAULTIMACONEXION"), rs.getInt("FICHAS")));
                 return true;
             } else {
                 return false;
@@ -475,7 +491,7 @@ public class Login extends javax.swing.JFrame {
             //Entra como usuario
 
             //Update de ultimo dia de conexión
-            actualizarFechaUltimaConexion(GestorUsuarios.getUsuarioActivo().getId());
+            actualizarFechaUltimaConexion();
             Menu m = new Menu(this);
             m.setVisible(true);
             this.setVisible(false);
@@ -489,12 +505,12 @@ public class Login extends javax.swing.JFrame {
 //        try {
 //            //Crea la conexion con el servidor
 //            cliente = new Socket(ip, puerto);
-            //Entra con un usuario de prueba
-            GestorUsuarios.setUsuarioActivo(null);
+        //Entra con un usuario de prueba
+        GestorUsuarios.setUsuarioActivo(null);
 
-            Menu m = new Menu(this);
-            m.setVisible(true);
-            this.setVisible(false);
+        Menu m = new Menu(this);
+        m.setVisible(true);
+        this.setVisible(false);
 //        } catch (IOException ex) {
 //            JOptionPane.showMessageDialog(this, ex.getMessage());
 //        }

@@ -42,7 +42,7 @@ public class Menu extends javax.swing.JFrame {
 
         this.setLocationRelativeTo(null);
         this.setTitle("Ruleta SF - Menú Principal");
-        this.setIconImage(new ImageIcon(getClass().getResource("/Recursos/login.png")).getImage());
+        this.setIconImage(new ImageIcon(getClass().getResource("/Recursos/Logo.png")).getImage());
 
         this.l = l;
 //        this.cliente = cliente;
