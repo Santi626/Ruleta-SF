@@ -5,6 +5,8 @@
  */
 package Interfaces;
 
+import BaseDatos.DataBase;
+import Clases.ErrorException;
 import Clases.GestorUsuarios;
 import Clases.Mesa;
 import Clases.Resultado;
@@ -14,8 +16,12 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
@@ -35,7 +41,6 @@ public class Jugar extends javax.swing.JFrame implements Runnable {
 //    private Socket cliente;
 //    private DataInputStream entrada;
 //    private DataOutputStream salida;
-
     //Botones numeros
     public static ArrayList<JButton> botones;
 
@@ -58,6 +63,7 @@ public class Jugar extends javax.swing.JFrame implements Runnable {
         this.setLocationRelativeTo(null);
         this.setTitle("Ruleta SF - Jugar");
         this.setIconImage(new ImageIcon(getClass().getResource("/Recursos/Logo.png")).getImage());
+        this.setResizable(false);
 
         //Si el usuario es un usuario invitado se le proporcionan 100 fichas
         if (GestorUsuarios.getUsuarioActivo() == null) {
@@ -136,18 +142,8 @@ public class Jugar extends javax.swing.JFrame implements Runnable {
     private void initComponents() {
 
         grupoFichas = new javax.swing.ButtonGroup();
-        jPanel1 = new javax.swing.JPanel();
-        panelLog = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        taLog = new javax.swing.JTextArea();
-        panelFichas = new javax.swing.JPanel();
-        tbFicha2 = new javax.swing.JToggleButton();
-        tbFicha1 = new javax.swing.JToggleButton();
-        tbFicha5 = new javax.swing.JToggleButton();
-        tbFicha20 = new javax.swing.JToggleButton();
-        tbFicha100 = new javax.swing.JToggleButton();
-        tbFichaBorrar = new javax.swing.JToggleButton();
-        labelFichas = new javax.swing.JLabel();
+        jPanelimagen1 = new PanelImagen.jPanelimagen();
+        labelTiempo = new javax.swing.JLabel();
         panelMesa = new javax.swing.JPanel();
         panelMesaHijo = new javax.swing.JPanel();
         panelNumeros = new javax.swing.JPanel();
@@ -203,8 +199,20 @@ public class Jugar extends javax.swing.JFrame implements Runnable {
         btNegro = new javax.swing.JButton();
         btImpar = new javax.swing.JButton();
         btAltos = new javax.swing.JButton();
+        panelFichas = new javax.swing.JPanel();
+        tbFicha2 = new javax.swing.JToggleButton();
+        tbFicha1 = new javax.swing.JToggleButton();
+        tbFicha5 = new javax.swing.JToggleButton();
+        tbFicha20 = new javax.swing.JToggleButton();
+        tbFicha100 = new javax.swing.JToggleButton();
+        tbFichaBorrar = new javax.swing.JToggleButton();
         btCerrar = new javax.swing.JButton();
-        labelTiempo = new javax.swing.JLabel();
+        labelFichas = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        taLog = new javax.swing.JTextArea();
+        panelResultado = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        labelResultadoNumero = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -213,28 +221,710 @@ public class Jugar extends javax.swing.JFrame implements Runnable {
             }
         });
 
-        jPanel1.setBackground(new java.awt.Color(102, 255, 102));
+        jPanelimagen1.setImagenFondo(new PanelImagen.ImagenFondo(new java.io.File("C:/Users/santi/OneDrive/SegundoDAM/Proyecto/MisArchivos/Ruleta SF/src/Recursos/fondoMesa.jpg"),1.0f));
+        jPanelimagen1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        panelLog.setBackground(new java.awt.Color(102, 255, 102));
-        panelLog.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        labelTiempo.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        labelTiempo.setForeground(new java.awt.Color(255, 255, 255));
+        labelTiempo.setText("Tiempo de Apuestas: 15");
+        jPanelimagen1.add(labelTiempo, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 12, 280, 37));
 
-        taLog.setBackground(new java.awt.Color(102, 255, 102));
-        taLog.setColumns(20);
-        taLog.setRows(5);
-        taLog.setEnabled(false);
-        taLog.setFocusable(false);
-        jScrollPane1.setViewportView(taLog);
+        panelMesa.setBackground(new java.awt.Color(102, 255, 102));
+        panelMesa.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
 
-        javax.swing.GroupLayout panelLogLayout = new javax.swing.GroupLayout(panelLog);
-        panelLog.setLayout(panelLogLayout);
-        panelLogLayout.setHorizontalGroup(
-            panelLogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1)
+        panelMesaHijo.setBackground(new java.awt.Color(102, 255, 102));
+
+        panelNumeros.setBackground(new java.awt.Color(102, 255, 102));
+        panelNumeros.setLayout(new java.awt.GridLayout(3, 13));
+
+        btNumero3.setBackground(new java.awt.Color(255, 0, 0));
+        btNumero3.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        btNumero3.setForeground(new java.awt.Color(255, 255, 255));
+        btNumero3.setText("3");
+        btNumero3.setToolTipText("Numero (35:1)");
+        btNumero3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btNumero3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btNumero3ActionPerformed(evt);
+            }
+        });
+        panelNumeros.add(btNumero3);
+
+        btNumero6.setBackground(new java.awt.Color(0, 0, 0));
+        btNumero6.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        btNumero6.setForeground(new java.awt.Color(255, 255, 255));
+        btNumero6.setText("6");
+        btNumero6.setToolTipText("Numero (35:1)");
+        btNumero6.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btNumero6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btNumero6ActionPerformed(evt);
+            }
+        });
+        panelNumeros.add(btNumero6);
+
+        btNumero9.setBackground(new java.awt.Color(255, 0, 0));
+        btNumero9.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        btNumero9.setForeground(new java.awt.Color(255, 255, 255));
+        btNumero9.setText("9");
+        btNumero9.setToolTipText("Numero (35:1)");
+        btNumero9.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btNumero9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btNumero9ActionPerformed(evt);
+            }
+        });
+        panelNumeros.add(btNumero9);
+
+        btNumero12.setBackground(new java.awt.Color(255, 0, 0));
+        btNumero12.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        btNumero12.setForeground(new java.awt.Color(255, 255, 255));
+        btNumero12.setText("12");
+        btNumero12.setToolTipText("Numero (35:1)");
+        btNumero12.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btNumero12.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btNumero12ActionPerformed(evt);
+            }
+        });
+        panelNumeros.add(btNumero12);
+
+        btNumero15.setBackground(new java.awt.Color(0, 0, 0));
+        btNumero15.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        btNumero15.setForeground(new java.awt.Color(255, 255, 255));
+        btNumero15.setText("15");
+        btNumero15.setToolTipText("Numero (35:1)");
+        btNumero15.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btNumero15.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btNumero15ActionPerformed(evt);
+            }
+        });
+        panelNumeros.add(btNumero15);
+
+        btNumero18.setBackground(new java.awt.Color(255, 0, 0));
+        btNumero18.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        btNumero18.setForeground(new java.awt.Color(255, 255, 255));
+        btNumero18.setText("18");
+        btNumero18.setToolTipText("Numero (35:1)");
+        btNumero18.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btNumero18.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btNumero18ActionPerformed(evt);
+            }
+        });
+        panelNumeros.add(btNumero18);
+
+        btNumero21.setBackground(new java.awt.Color(255, 0, 0));
+        btNumero21.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        btNumero21.setForeground(new java.awt.Color(255, 255, 255));
+        btNumero21.setText("21");
+        btNumero21.setToolTipText("Numero (35:1)");
+        btNumero21.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btNumero21.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btNumero21ActionPerformed(evt);
+            }
+        });
+        panelNumeros.add(btNumero21);
+
+        btNumero24.setBackground(new java.awt.Color(0, 0, 0));
+        btNumero24.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        btNumero24.setForeground(new java.awt.Color(255, 255, 255));
+        btNumero24.setText("24");
+        btNumero24.setToolTipText("Numero (35:1)");
+        btNumero24.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btNumero24.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btNumero24ActionPerformed(evt);
+            }
+        });
+        panelNumeros.add(btNumero24);
+
+        btNumero27.setBackground(new java.awt.Color(255, 0, 0));
+        btNumero27.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        btNumero27.setForeground(new java.awt.Color(255, 255, 255));
+        btNumero27.setText("27");
+        btNumero27.setToolTipText("Numero (35:1)");
+        btNumero27.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btNumero27.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btNumero27ActionPerformed(evt);
+            }
+        });
+        panelNumeros.add(btNumero27);
+
+        btNumero30.setBackground(new java.awt.Color(255, 0, 0));
+        btNumero30.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        btNumero30.setForeground(new java.awt.Color(255, 255, 255));
+        btNumero30.setText("30");
+        btNumero30.setToolTipText("Numero (35:1)");
+        btNumero30.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btNumero30.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btNumero30ActionPerformed(evt);
+            }
+        });
+        panelNumeros.add(btNumero30);
+
+        btNumero33.setBackground(new java.awt.Color(0, 0, 0));
+        btNumero33.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        btNumero33.setForeground(new java.awt.Color(255, 255, 255));
+        btNumero33.setText("33");
+        btNumero33.setToolTipText("Numero (35:1)");
+        btNumero33.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btNumero33.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btNumero33ActionPerformed(evt);
+            }
+        });
+        panelNumeros.add(btNumero33);
+
+        btNumero36.setBackground(new java.awt.Color(255, 0, 0));
+        btNumero36.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        btNumero36.setForeground(new java.awt.Color(255, 255, 255));
+        btNumero36.setText("36");
+        btNumero36.setToolTipText("Numero (35:1)");
+        btNumero36.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btNumero36.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btNumero36ActionPerformed(evt);
+            }
+        });
+        panelNumeros.add(btNumero36);
+
+        btNumero2.setBackground(new java.awt.Color(0, 0, 0));
+        btNumero2.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        btNumero2.setForeground(new java.awt.Color(255, 255, 255));
+        btNumero2.setText("2");
+        btNumero2.setToolTipText("Numero (35:1)");
+        btNumero2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btNumero2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btNumero2ActionPerformed(evt);
+            }
+        });
+        panelNumeros.add(btNumero2);
+
+        btNumero5.setBackground(new java.awt.Color(255, 0, 0));
+        btNumero5.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        btNumero5.setForeground(new java.awt.Color(255, 255, 255));
+        btNumero5.setText("5");
+        btNumero5.setToolTipText("Numero (35:1)");
+        btNumero5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btNumero5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btNumero5ActionPerformed(evt);
+            }
+        });
+        panelNumeros.add(btNumero5);
+
+        btNumero8.setBackground(new java.awt.Color(0, 0, 0));
+        btNumero8.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        btNumero8.setForeground(new java.awt.Color(255, 255, 255));
+        btNumero8.setText("8");
+        btNumero8.setToolTipText("Numero (35:1)");
+        btNumero8.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btNumero8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btNumero8ActionPerformed(evt);
+            }
+        });
+        panelNumeros.add(btNumero8);
+
+        btNumero11.setBackground(new java.awt.Color(0, 0, 0));
+        btNumero11.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        btNumero11.setForeground(new java.awt.Color(255, 255, 255));
+        btNumero11.setText("11");
+        btNumero11.setToolTipText("Numero (35:1)");
+        btNumero11.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btNumero11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btNumero11ActionPerformed(evt);
+            }
+        });
+        panelNumeros.add(btNumero11);
+
+        btNumero14.setBackground(new java.awt.Color(255, 0, 0));
+        btNumero14.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        btNumero14.setForeground(new java.awt.Color(255, 255, 255));
+        btNumero14.setText("14");
+        btNumero14.setToolTipText("Numero (35:1)");
+        btNumero14.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btNumero14.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btNumero14ActionPerformed(evt);
+            }
+        });
+        panelNumeros.add(btNumero14);
+
+        btNumero17.setBackground(new java.awt.Color(0, 0, 0));
+        btNumero17.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        btNumero17.setForeground(new java.awt.Color(255, 255, 255));
+        btNumero17.setText("17");
+        btNumero17.setToolTipText("Numero (35:1)");
+        btNumero17.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btNumero17.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btNumero17ActionPerformed(evt);
+            }
+        });
+        panelNumeros.add(btNumero17);
+
+        btNumero20.setBackground(new java.awt.Color(0, 0, 0));
+        btNumero20.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        btNumero20.setForeground(new java.awt.Color(255, 255, 255));
+        btNumero20.setText("20");
+        btNumero20.setToolTipText("Numero (35:1)");
+        btNumero20.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btNumero20.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btNumero20ActionPerformed(evt);
+            }
+        });
+        panelNumeros.add(btNumero20);
+
+        btNumero23.setBackground(new java.awt.Color(255, 0, 0));
+        btNumero23.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        btNumero23.setForeground(new java.awt.Color(255, 255, 255));
+        btNumero23.setText("23");
+        btNumero23.setToolTipText("Numero (35:1)");
+        btNumero23.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btNumero23.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btNumero23ActionPerformed(evt);
+            }
+        });
+        panelNumeros.add(btNumero23);
+
+        btNumero26.setBackground(new java.awt.Color(0, 0, 0));
+        btNumero26.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        btNumero26.setForeground(new java.awt.Color(255, 255, 255));
+        btNumero26.setText("26");
+        btNumero26.setToolTipText("Numero (35:1)");
+        btNumero26.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btNumero26.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btNumero26ActionPerformed(evt);
+            }
+        });
+        panelNumeros.add(btNumero26);
+
+        btNumero29.setBackground(new java.awt.Color(0, 0, 0));
+        btNumero29.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        btNumero29.setForeground(new java.awt.Color(255, 255, 255));
+        btNumero29.setText("29");
+        btNumero29.setToolTipText("Numero (35:1)");
+        btNumero29.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btNumero29.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btNumero29ActionPerformed(evt);
+            }
+        });
+        panelNumeros.add(btNumero29);
+
+        btNumero32.setBackground(new java.awt.Color(255, 0, 0));
+        btNumero32.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        btNumero32.setForeground(new java.awt.Color(255, 255, 255));
+        btNumero32.setText("32");
+        btNumero32.setToolTipText("Numero (35:1)");
+        btNumero32.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btNumero32.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btNumero32ActionPerformed(evt);
+            }
+        });
+        panelNumeros.add(btNumero32);
+
+        btNumero35.setBackground(new java.awt.Color(0, 0, 0));
+        btNumero35.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        btNumero35.setForeground(new java.awt.Color(255, 255, 255));
+        btNumero35.setText("35");
+        btNumero35.setToolTipText("Numero (35:1)");
+        btNumero35.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btNumero35.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btNumero35ActionPerformed(evt);
+            }
+        });
+        panelNumeros.add(btNumero35);
+
+        btNumero1.setBackground(new java.awt.Color(255, 0, 0));
+        btNumero1.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        btNumero1.setForeground(new java.awt.Color(255, 255, 255));
+        btNumero1.setText("1");
+        btNumero1.setToolTipText("Numero (35:1)");
+        btNumero1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btNumero1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btNumero1ActionPerformed(evt);
+            }
+        });
+        panelNumeros.add(btNumero1);
+
+        btNumero4.setBackground(new java.awt.Color(0, 0, 0));
+        btNumero4.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        btNumero4.setForeground(new java.awt.Color(255, 255, 255));
+        btNumero4.setText("4");
+        btNumero4.setToolTipText("Numero (35:1)");
+        btNumero4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btNumero4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btNumero4ActionPerformed(evt);
+            }
+        });
+        panelNumeros.add(btNumero4);
+
+        btNumero7.setBackground(new java.awt.Color(255, 0, 0));
+        btNumero7.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        btNumero7.setForeground(new java.awt.Color(255, 255, 255));
+        btNumero7.setText("7");
+        btNumero7.setToolTipText("Numero (35:1)");
+        btNumero7.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btNumero7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btNumero7ActionPerformed(evt);
+            }
+        });
+        panelNumeros.add(btNumero7);
+
+        btNumero10.setBackground(new java.awt.Color(0, 0, 0));
+        btNumero10.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        btNumero10.setForeground(new java.awt.Color(255, 255, 255));
+        btNumero10.setText("10");
+        btNumero10.setToolTipText("Numero (35:1)");
+        btNumero10.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btNumero10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btNumero10ActionPerformed(evt);
+            }
+        });
+        panelNumeros.add(btNumero10);
+
+        btNumero13.setBackground(new java.awt.Color(0, 0, 0));
+        btNumero13.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        btNumero13.setForeground(new java.awt.Color(255, 255, 255));
+        btNumero13.setText("13");
+        btNumero13.setToolTipText("Numero (35:1)");
+        btNumero13.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btNumero13.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btNumero13ActionPerformed(evt);
+            }
+        });
+        panelNumeros.add(btNumero13);
+
+        btNumero16.setBackground(new java.awt.Color(255, 0, 0));
+        btNumero16.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        btNumero16.setForeground(new java.awt.Color(255, 255, 255));
+        btNumero16.setText("16");
+        btNumero16.setToolTipText("Numero (35:1)");
+        btNumero16.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btNumero16.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btNumero16ActionPerformed(evt);
+            }
+        });
+        panelNumeros.add(btNumero16);
+
+        btNumero19.setBackground(new java.awt.Color(255, 0, 0));
+        btNumero19.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        btNumero19.setForeground(new java.awt.Color(255, 255, 255));
+        btNumero19.setText("19");
+        btNumero19.setToolTipText("Numero (35:1)");
+        btNumero19.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btNumero19.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btNumero19ActionPerformed(evt);
+            }
+        });
+        panelNumeros.add(btNumero19);
+
+        btNumero22.setBackground(new java.awt.Color(0, 0, 0));
+        btNumero22.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        btNumero22.setForeground(new java.awt.Color(255, 255, 255));
+        btNumero22.setText("22");
+        btNumero22.setToolTipText("Numero (35:1)");
+        btNumero22.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btNumero22.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btNumero22ActionPerformed(evt);
+            }
+        });
+        panelNumeros.add(btNumero22);
+
+        btNumero25.setBackground(new java.awt.Color(255, 0, 0));
+        btNumero25.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        btNumero25.setForeground(new java.awt.Color(255, 255, 255));
+        btNumero25.setText("25");
+        btNumero25.setToolTipText("Numero (35:1)");
+        btNumero25.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btNumero25.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btNumero25ActionPerformed(evt);
+            }
+        });
+        panelNumeros.add(btNumero25);
+
+        btNumero28.setBackground(new java.awt.Color(0, 0, 0));
+        btNumero28.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        btNumero28.setForeground(new java.awt.Color(255, 255, 255));
+        btNumero28.setText("28");
+        btNumero28.setToolTipText("Numero (35:1)");
+        btNumero28.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btNumero28.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btNumero28ActionPerformed(evt);
+            }
+        });
+        panelNumeros.add(btNumero28);
+
+        btNumero31.setBackground(new java.awt.Color(0, 0, 0));
+        btNumero31.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        btNumero31.setForeground(new java.awt.Color(255, 255, 255));
+        btNumero31.setText("31");
+        btNumero31.setToolTipText("Numero (35:1)");
+        btNumero31.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btNumero31.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btNumero31ActionPerformed(evt);
+            }
+        });
+        panelNumeros.add(btNumero31);
+
+        btNumero34.setBackground(new java.awt.Color(255, 0, 0));
+        btNumero34.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        btNumero34.setForeground(new java.awt.Color(255, 255, 255));
+        btNumero34.setText("34");
+        btNumero34.setToolTipText("Numero (35:1)");
+        btNumero34.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btNumero34.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btNumero34ActionPerformed(evt);
+            }
+        });
+        panelNumeros.add(btNumero34);
+
+        panelColumnas.setBackground(new java.awt.Color(102, 255, 102));
+        panelColumnas.setLayout(new java.awt.GridLayout(3, 1));
+
+        btColumna3.setBackground(new java.awt.Color(153, 255, 153));
+        btColumna3.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        btColumna3.setForeground(new java.awt.Color(0, 0, 0));
+        btColumna3.setText("2 TO 1");
+        btColumna3.setToolTipText("Columna (2:1)");
+        btColumna3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btColumna3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btColumna3ActionPerformed(evt);
+            }
+        });
+        panelColumnas.add(btColumna3);
+
+        btColumna2.setBackground(new java.awt.Color(153, 255, 153));
+        btColumna2.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        btColumna2.setForeground(new java.awt.Color(0, 0, 0));
+        btColumna2.setText("2 TO 1");
+        btColumna2.setToolTipText("Columna (2:1)");
+        btColumna2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btColumna2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btColumna2ActionPerformed(evt);
+            }
+        });
+        panelColumnas.add(btColumna2);
+
+        btColumna1.setBackground(new java.awt.Color(153, 255, 153));
+        btColumna1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        btColumna1.setForeground(new java.awt.Color(0, 0, 0));
+        btColumna1.setText("2 TO 1");
+        btColumna1.setToolTipText("Columna (2:1)");
+        btColumna1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btColumna1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btColumna1ActionPerformed(evt);
+            }
+        });
+        panelColumnas.add(btColumna1);
+
+        btNumero0.setBackground(new java.awt.Color(0, 255, 0));
+        btNumero0.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        btNumero0.setForeground(new java.awt.Color(255, 255, 255));
+        btNumero0.setText("0");
+        btNumero0.setToolTipText("Numero (35:1)");
+        btNumero0.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btNumero0.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btNumero0ActionPerformed(evt);
+            }
+        });
+
+        panelDocenas.setBackground(new java.awt.Color(102, 255, 102));
+        panelDocenas.setLayout(new java.awt.GridLayout(1, 3));
+
+        btDocena1.setBackground(new java.awt.Color(153, 255, 153));
+        btDocena1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        btDocena1.setForeground(new java.awt.Color(0, 0, 0));
+        btDocena1.setText("1ra 12");
+        btDocena1.setToolTipText("Columna (2:1)");
+        btDocena1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btDocena1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btDocena1ActionPerformed(evt);
+            }
+        });
+        panelDocenas.add(btDocena1);
+
+        btDocena2.setBackground(new java.awt.Color(153, 255, 153));
+        btDocena2.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        btDocena2.setForeground(new java.awt.Color(0, 0, 0));
+        btDocena2.setText("2da 12");
+        btDocena2.setToolTipText("Columna (2:1)");
+        btDocena2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btDocena2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btDocena2ActionPerformed(evt);
+            }
+        });
+        panelDocenas.add(btDocena2);
+
+        btDocena3.setBackground(new java.awt.Color(153, 255, 153));
+        btDocena3.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        btDocena3.setForeground(new java.awt.Color(0, 0, 0));
+        btDocena3.setText("3ra 12");
+        btDocena3.setToolTipText("Columna (2:1)");
+        btDocena3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btDocena3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btDocena3ActionPerformed(evt);
+            }
+        });
+        panelDocenas.add(btDocena3);
+
+        panelColores.setBackground(new java.awt.Color(102, 255, 102));
+        panelColores.setLayout(new java.awt.GridLayout(1, 6));
+
+        btBajos.setBackground(new java.awt.Color(153, 255, 153));
+        btBajos.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        btBajos.setForeground(new java.awt.Color(0, 0, 0));
+        btBajos.setText("1 a 18");
+        btBajos.setToolTipText("Alto/Bajo (1:1)");
+        btBajos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btBajos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btBajosActionPerformed(evt);
+            }
+        });
+        panelColores.add(btBajos);
+
+        btPar.setBackground(new java.awt.Color(153, 255, 153));
+        btPar.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        btPar.setForeground(new java.awt.Color(0, 0, 0));
+        btPar.setText("Par");
+        btPar.setToolTipText("Par/Impar (1:1)");
+        btPar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btPar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btParActionPerformed(evt);
+            }
+        });
+        panelColores.add(btPar);
+
+        btRojo.setBackground(new java.awt.Color(255, 0, 0));
+        btRojo.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        btRojo.setForeground(new java.awt.Color(255, 255, 255));
+        btRojo.setToolTipText("Color (1:1)");
+        btRojo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btRojo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btRojoActionPerformed(evt);
+            }
+        });
+        panelColores.add(btRojo);
+
+        btNegro.setBackground(new java.awt.Color(0, 0, 0));
+        btNegro.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        btNegro.setForeground(new java.awt.Color(255, 255, 255));
+        btNegro.setToolTipText("Color (1:1)");
+        btNegro.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btNegro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btNegroActionPerformed(evt);
+            }
+        });
+        panelColores.add(btNegro);
+
+        btImpar.setBackground(new java.awt.Color(153, 255, 153));
+        btImpar.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        btImpar.setForeground(new java.awt.Color(0, 0, 0));
+        btImpar.setText("Impar");
+        btImpar.setToolTipText("Par/Impar (1:1)");
+        btImpar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btImpar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btImparActionPerformed(evt);
+            }
+        });
+        panelColores.add(btImpar);
+
+        btAltos.setBackground(new java.awt.Color(153, 255, 153));
+        btAltos.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        btAltos.setForeground(new java.awt.Color(0, 0, 0));
+        btAltos.setText("19 a 36");
+        btAltos.setToolTipText("Alto/Bajo (1:1)");
+        btAltos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btAltos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btAltosActionPerformed(evt);
+            }
+        });
+        panelColores.add(btAltos);
+
+        javax.swing.GroupLayout panelMesaHijoLayout = new javax.swing.GroupLayout(panelMesaHijo);
+        panelMesaHijo.setLayout(panelMesaHijoLayout);
+        panelMesaHijoLayout.setHorizontalGroup(
+            panelMesaHijoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelMesaHijoLayout.createSequentialGroup()
+                .addComponent(btNumero0, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(panelMesaHijoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(panelColores, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(panelDocenas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(panelNumeros, javax.swing.GroupLayout.DEFAULT_SIZE, 865, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(panelColumnas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
-        panelLogLayout.setVerticalGroup(
-            panelLogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1)
+        panelMesaHijoLayout.setVerticalGroup(
+            panelMesaHijoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelMesaHijoLayout.createSequentialGroup()
+                .addGroup(panelMesaHijoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(panelColumnas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(panelNumeros, javax.swing.GroupLayout.DEFAULT_SIZE, 175, Short.MAX_VALUE)
+                    .addComponent(btNumero0, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(panelDocenas, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(panelColores, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
+
+        javax.swing.GroupLayout panelMesaLayout = new javax.swing.GroupLayout(panelMesa);
+        panelMesa.setLayout(panelMesaLayout);
+        panelMesaLayout.setHorizontalGroup(
+            panelMesaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelMesaLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(panelMesaHijo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        panelMesaLayout.setVerticalGroup(
+            panelMesaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelMesaLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(panelMesaHijo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
+        jPanelimagen1.add(panelMesa, new org.netbeans.lib.awtextra.AbsoluteConstraints(254, 57, 1060, 340));
 
         panelFichas.setBackground(new java.awt.Color(102, 255, 102));
         panelFichas.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
@@ -243,6 +933,7 @@ public class Jugar extends javax.swing.JFrame implements Runnable {
         grupoFichas.add(tbFicha2);
         tbFicha2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/Ficha2.png"))); // NOI18N
         tbFicha2.setToolTipText("Seleccionar ficha: 2");
+        tbFicha2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         tbFicha2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tbFicha2ActionPerformed(evt);
@@ -254,6 +945,7 @@ public class Jugar extends javax.swing.JFrame implements Runnable {
         tbFicha1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/Ficha1.png"))); // NOI18N
         tbFicha1.setSelected(true);
         tbFicha1.setToolTipText("Seleccionar ficha: 1");
+        tbFicha1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         tbFicha1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tbFicha1ActionPerformed(evt);
@@ -264,6 +956,7 @@ public class Jugar extends javax.swing.JFrame implements Runnable {
         grupoFichas.add(tbFicha5);
         tbFicha5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/Ficha5.png"))); // NOI18N
         tbFicha5.setToolTipText("Seleccionar ficha: 5");
+        tbFicha5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         tbFicha5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tbFicha5ActionPerformed(evt);
@@ -274,6 +967,7 @@ public class Jugar extends javax.swing.JFrame implements Runnable {
         grupoFichas.add(tbFicha20);
         tbFicha20.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/Ficha20.png"))); // NOI18N
         tbFicha20.setToolTipText("Seleccionar ficha: 20");
+        tbFicha20.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         tbFicha20.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tbFicha20ActionPerformed(evt);
@@ -284,6 +978,7 @@ public class Jugar extends javax.swing.JFrame implements Runnable {
         grupoFichas.add(tbFicha100);
         tbFicha100.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/Ficha100.png"))); // NOI18N
         tbFicha100.setToolTipText("Seleccionar ficha: 100");
+        tbFicha100.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         tbFicha100.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tbFicha100ActionPerformed(evt);
@@ -294,6 +989,7 @@ public class Jugar extends javax.swing.JFrame implements Runnable {
         grupoFichas.add(tbFichaBorrar);
         tbFichaBorrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/borrar.png"))); // NOI18N
         tbFichaBorrar.setToolTipText("Borrar Apuesta");
+        tbFichaBorrar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         tbFichaBorrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tbFichaBorrarActionPerformed(evt);
@@ -333,717 +1029,66 @@ public class Jugar extends javax.swing.JFrame implements Runnable {
                 .addContainerGap())
         );
 
-        labelFichas.setText("Fichas: ");
+        jPanelimagen1.add(panelFichas, new org.netbeans.lib.awtextra.AbsoluteConstraints(254, 408, 1059, -1));
 
-        panelMesa.setBackground(new java.awt.Color(102, 255, 102));
-        panelMesa.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
-
-        panelMesaHijo.setBackground(new java.awt.Color(102, 255, 102));
-
-        panelNumeros.setBackground(new java.awt.Color(102, 255, 102));
-        panelNumeros.setLayout(new java.awt.GridLayout(3, 13));
-
-        btNumero3.setBackground(new java.awt.Color(255, 0, 0));
-        btNumero3.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        btNumero3.setForeground(new java.awt.Color(255, 255, 255));
-        btNumero3.setText("3");
-        btNumero3.setToolTipText("Numero (35:1)");
-        btNumero3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btNumero3ActionPerformed(evt);
-            }
-        });
-        panelNumeros.add(btNumero3);
-
-        btNumero6.setBackground(new java.awt.Color(0, 0, 0));
-        btNumero6.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        btNumero6.setForeground(new java.awt.Color(255, 255, 255));
-        btNumero6.setText("6");
-        btNumero6.setToolTipText("Numero (35:1)");
-        btNumero6.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btNumero6ActionPerformed(evt);
-            }
-        });
-        panelNumeros.add(btNumero6);
-
-        btNumero9.setBackground(new java.awt.Color(255, 0, 0));
-        btNumero9.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        btNumero9.setForeground(new java.awt.Color(255, 255, 255));
-        btNumero9.setText("9");
-        btNumero9.setToolTipText("Numero (35:1)");
-        btNumero9.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btNumero9ActionPerformed(evt);
-            }
-        });
-        panelNumeros.add(btNumero9);
-
-        btNumero12.setBackground(new java.awt.Color(255, 0, 0));
-        btNumero12.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        btNumero12.setForeground(new java.awt.Color(255, 255, 255));
-        btNumero12.setText("12");
-        btNumero12.setToolTipText("Numero (35:1)");
-        btNumero12.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btNumero12ActionPerformed(evt);
-            }
-        });
-        panelNumeros.add(btNumero12);
-
-        btNumero15.setBackground(new java.awt.Color(0, 0, 0));
-        btNumero15.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        btNumero15.setForeground(new java.awt.Color(255, 255, 255));
-        btNumero15.setText("15");
-        btNumero15.setToolTipText("Numero (35:1)");
-        btNumero15.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btNumero15ActionPerformed(evt);
-            }
-        });
-        panelNumeros.add(btNumero15);
-
-        btNumero18.setBackground(new java.awt.Color(255, 0, 0));
-        btNumero18.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        btNumero18.setForeground(new java.awt.Color(255, 255, 255));
-        btNumero18.setText("18");
-        btNumero18.setToolTipText("Numero (35:1)");
-        btNumero18.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btNumero18ActionPerformed(evt);
-            }
-        });
-        panelNumeros.add(btNumero18);
-
-        btNumero21.setBackground(new java.awt.Color(255, 0, 0));
-        btNumero21.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        btNumero21.setForeground(new java.awt.Color(255, 255, 255));
-        btNumero21.setText("21");
-        btNumero21.setToolTipText("Numero (35:1)");
-        btNumero21.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btNumero21ActionPerformed(evt);
-            }
-        });
-        panelNumeros.add(btNumero21);
-
-        btNumero24.setBackground(new java.awt.Color(0, 0, 0));
-        btNumero24.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        btNumero24.setForeground(new java.awt.Color(255, 255, 255));
-        btNumero24.setText("24");
-        btNumero24.setToolTipText("Numero (35:1)");
-        btNumero24.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btNumero24ActionPerformed(evt);
-            }
-        });
-        panelNumeros.add(btNumero24);
-
-        btNumero27.setBackground(new java.awt.Color(255, 0, 0));
-        btNumero27.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        btNumero27.setForeground(new java.awt.Color(255, 255, 255));
-        btNumero27.setText("27");
-        btNumero27.setToolTipText("Numero (35:1)");
-        btNumero27.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btNumero27ActionPerformed(evt);
-            }
-        });
-        panelNumeros.add(btNumero27);
-
-        btNumero30.setBackground(new java.awt.Color(255, 0, 0));
-        btNumero30.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        btNumero30.setForeground(new java.awt.Color(255, 255, 255));
-        btNumero30.setText("30");
-        btNumero30.setToolTipText("Numero (35:1)");
-        btNumero30.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btNumero30ActionPerformed(evt);
-            }
-        });
-        panelNumeros.add(btNumero30);
-
-        btNumero33.setBackground(new java.awt.Color(0, 0, 0));
-        btNumero33.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        btNumero33.setForeground(new java.awt.Color(255, 255, 255));
-        btNumero33.setText("33");
-        btNumero33.setToolTipText("Numero (35:1)");
-        btNumero33.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btNumero33ActionPerformed(evt);
-            }
-        });
-        panelNumeros.add(btNumero33);
-
-        btNumero36.setBackground(new java.awt.Color(255, 0, 0));
-        btNumero36.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        btNumero36.setForeground(new java.awt.Color(255, 255, 255));
-        btNumero36.setText("36");
-        btNumero36.setToolTipText("Numero (35:1)");
-        btNumero36.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btNumero36ActionPerformed(evt);
-            }
-        });
-        panelNumeros.add(btNumero36);
-
-        btNumero2.setBackground(new java.awt.Color(0, 0, 0));
-        btNumero2.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        btNumero2.setForeground(new java.awt.Color(255, 255, 255));
-        btNumero2.setText("2");
-        btNumero2.setToolTipText("Numero (35:1)");
-        btNumero2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btNumero2ActionPerformed(evt);
-            }
-        });
-        panelNumeros.add(btNumero2);
-
-        btNumero5.setBackground(new java.awt.Color(255, 0, 0));
-        btNumero5.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        btNumero5.setForeground(new java.awt.Color(255, 255, 255));
-        btNumero5.setText("5");
-        btNumero5.setToolTipText("Numero (35:1)");
-        btNumero5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btNumero5ActionPerformed(evt);
-            }
-        });
-        panelNumeros.add(btNumero5);
-
-        btNumero8.setBackground(new java.awt.Color(0, 0, 0));
-        btNumero8.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        btNumero8.setForeground(new java.awt.Color(255, 255, 255));
-        btNumero8.setText("8");
-        btNumero8.setToolTipText("Numero (35:1)");
-        btNumero8.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btNumero8ActionPerformed(evt);
-            }
-        });
-        panelNumeros.add(btNumero8);
-
-        btNumero11.setBackground(new java.awt.Color(0, 0, 0));
-        btNumero11.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        btNumero11.setForeground(new java.awt.Color(255, 255, 255));
-        btNumero11.setText("11");
-        btNumero11.setToolTipText("Numero (35:1)");
-        btNumero11.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btNumero11ActionPerformed(evt);
-            }
-        });
-        panelNumeros.add(btNumero11);
-
-        btNumero14.setBackground(new java.awt.Color(255, 0, 0));
-        btNumero14.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        btNumero14.setForeground(new java.awt.Color(255, 255, 255));
-        btNumero14.setText("14");
-        btNumero14.setToolTipText("Numero (35:1)");
-        btNumero14.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btNumero14ActionPerformed(evt);
-            }
-        });
-        panelNumeros.add(btNumero14);
-
-        btNumero17.setBackground(new java.awt.Color(0, 0, 0));
-        btNumero17.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        btNumero17.setForeground(new java.awt.Color(255, 255, 255));
-        btNumero17.setText("17");
-        btNumero17.setToolTipText("Numero (35:1)");
-        btNumero17.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btNumero17ActionPerformed(evt);
-            }
-        });
-        panelNumeros.add(btNumero17);
-
-        btNumero20.setBackground(new java.awt.Color(0, 0, 0));
-        btNumero20.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        btNumero20.setForeground(new java.awt.Color(255, 255, 255));
-        btNumero20.setText("20");
-        btNumero20.setToolTipText("Numero (35:1)");
-        btNumero20.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btNumero20ActionPerformed(evt);
-            }
-        });
-        panelNumeros.add(btNumero20);
-
-        btNumero23.setBackground(new java.awt.Color(255, 0, 0));
-        btNumero23.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        btNumero23.setForeground(new java.awt.Color(255, 255, 255));
-        btNumero23.setText("23");
-        btNumero23.setToolTipText("Numero (35:1)");
-        btNumero23.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btNumero23ActionPerformed(evt);
-            }
-        });
-        panelNumeros.add(btNumero23);
-
-        btNumero26.setBackground(new java.awt.Color(0, 0, 0));
-        btNumero26.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        btNumero26.setForeground(new java.awt.Color(255, 255, 255));
-        btNumero26.setText("26");
-        btNumero26.setToolTipText("Numero (35:1)");
-        btNumero26.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btNumero26ActionPerformed(evt);
-            }
-        });
-        panelNumeros.add(btNumero26);
-
-        btNumero29.setBackground(new java.awt.Color(0, 0, 0));
-        btNumero29.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        btNumero29.setForeground(new java.awt.Color(255, 255, 255));
-        btNumero29.setText("29");
-        btNumero29.setToolTipText("Numero (35:1)");
-        btNumero29.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btNumero29ActionPerformed(evt);
-            }
-        });
-        panelNumeros.add(btNumero29);
-
-        btNumero32.setBackground(new java.awt.Color(255, 0, 0));
-        btNumero32.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        btNumero32.setForeground(new java.awt.Color(255, 255, 255));
-        btNumero32.setText("32");
-        btNumero32.setToolTipText("Numero (35:1)");
-        btNumero32.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btNumero32ActionPerformed(evt);
-            }
-        });
-        panelNumeros.add(btNumero32);
-
-        btNumero35.setBackground(new java.awt.Color(0, 0, 0));
-        btNumero35.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        btNumero35.setForeground(new java.awt.Color(255, 255, 255));
-        btNumero35.setText("35");
-        btNumero35.setToolTipText("Numero (35:1)");
-        btNumero35.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btNumero35ActionPerformed(evt);
-            }
-        });
-        panelNumeros.add(btNumero35);
-
-        btNumero1.setBackground(new java.awt.Color(255, 0, 0));
-        btNumero1.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        btNumero1.setForeground(new java.awt.Color(255, 255, 255));
-        btNumero1.setText("1");
-        btNumero1.setToolTipText("Numero (35:1)");
-        btNumero1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btNumero1ActionPerformed(evt);
-            }
-        });
-        panelNumeros.add(btNumero1);
-
-        btNumero4.setBackground(new java.awt.Color(0, 0, 0));
-        btNumero4.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        btNumero4.setForeground(new java.awt.Color(255, 255, 255));
-        btNumero4.setText("4");
-        btNumero4.setToolTipText("Numero (35:1)");
-        btNumero4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btNumero4ActionPerformed(evt);
-            }
-        });
-        panelNumeros.add(btNumero4);
-
-        btNumero7.setBackground(new java.awt.Color(255, 0, 0));
-        btNumero7.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        btNumero7.setForeground(new java.awt.Color(255, 255, 255));
-        btNumero7.setText("7");
-        btNumero7.setToolTipText("Numero (35:1)");
-        btNumero7.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btNumero7ActionPerformed(evt);
-            }
-        });
-        panelNumeros.add(btNumero7);
-
-        btNumero10.setBackground(new java.awt.Color(0, 0, 0));
-        btNumero10.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        btNumero10.setForeground(new java.awt.Color(255, 255, 255));
-        btNumero10.setText("10");
-        btNumero10.setToolTipText("Numero (35:1)");
-        btNumero10.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btNumero10ActionPerformed(evt);
-            }
-        });
-        panelNumeros.add(btNumero10);
-
-        btNumero13.setBackground(new java.awt.Color(0, 0, 0));
-        btNumero13.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        btNumero13.setForeground(new java.awt.Color(255, 255, 255));
-        btNumero13.setText("13");
-        btNumero13.setToolTipText("Numero (35:1)");
-        btNumero13.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btNumero13ActionPerformed(evt);
-            }
-        });
-        panelNumeros.add(btNumero13);
-
-        btNumero16.setBackground(new java.awt.Color(255, 0, 0));
-        btNumero16.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        btNumero16.setForeground(new java.awt.Color(255, 255, 255));
-        btNumero16.setText("16");
-        btNumero16.setToolTipText("Numero (35:1)");
-        btNumero16.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btNumero16ActionPerformed(evt);
-            }
-        });
-        panelNumeros.add(btNumero16);
-
-        btNumero19.setBackground(new java.awt.Color(255, 0, 0));
-        btNumero19.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        btNumero19.setForeground(new java.awt.Color(255, 255, 255));
-        btNumero19.setText("19");
-        btNumero19.setToolTipText("Numero (35:1)");
-        btNumero19.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btNumero19ActionPerformed(evt);
-            }
-        });
-        panelNumeros.add(btNumero19);
-
-        btNumero22.setBackground(new java.awt.Color(0, 0, 0));
-        btNumero22.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        btNumero22.setForeground(new java.awt.Color(255, 255, 255));
-        btNumero22.setText("22");
-        btNumero22.setToolTipText("Numero (35:1)");
-        btNumero22.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btNumero22ActionPerformed(evt);
-            }
-        });
-        panelNumeros.add(btNumero22);
-
-        btNumero25.setBackground(new java.awt.Color(255, 0, 0));
-        btNumero25.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        btNumero25.setForeground(new java.awt.Color(255, 255, 255));
-        btNumero25.setText("25");
-        btNumero25.setToolTipText("Numero (35:1)");
-        btNumero25.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btNumero25ActionPerformed(evt);
-            }
-        });
-        panelNumeros.add(btNumero25);
-
-        btNumero28.setBackground(new java.awt.Color(0, 0, 0));
-        btNumero28.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        btNumero28.setForeground(new java.awt.Color(255, 255, 255));
-        btNumero28.setText("28");
-        btNumero28.setToolTipText("Numero (35:1)");
-        btNumero28.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btNumero28ActionPerformed(evt);
-            }
-        });
-        panelNumeros.add(btNumero28);
-
-        btNumero31.setBackground(new java.awt.Color(0, 0, 0));
-        btNumero31.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        btNumero31.setForeground(new java.awt.Color(255, 255, 255));
-        btNumero31.setText("31");
-        btNumero31.setToolTipText("Numero (35:1)");
-        btNumero31.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btNumero31ActionPerformed(evt);
-            }
-        });
-        panelNumeros.add(btNumero31);
-
-        btNumero34.setBackground(new java.awt.Color(255, 0, 0));
-        btNumero34.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        btNumero34.setForeground(new java.awt.Color(255, 255, 255));
-        btNumero34.setText("34");
-        btNumero34.setToolTipText("Numero (35:1)");
-        btNumero34.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btNumero34ActionPerformed(evt);
-            }
-        });
-        panelNumeros.add(btNumero34);
-
-        panelColumnas.setBackground(new java.awt.Color(102, 255, 102));
-        panelColumnas.setLayout(new java.awt.GridLayout(3, 1));
-
-        btColumna3.setBackground(new java.awt.Color(153, 255, 153));
-        btColumna3.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        btColumna3.setForeground(new java.awt.Color(0, 0, 0));
-        btColumna3.setText("2 TO 1");
-        btColumna3.setToolTipText("Columna (2:1)");
-        btColumna3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btColumna3ActionPerformed(evt);
-            }
-        });
-        panelColumnas.add(btColumna3);
-
-        btColumna2.setBackground(new java.awt.Color(153, 255, 153));
-        btColumna2.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        btColumna2.setForeground(new java.awt.Color(0, 0, 0));
-        btColumna2.setText("2 TO 1");
-        btColumna2.setToolTipText("Columna (2:1)");
-        btColumna2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btColumna2ActionPerformed(evt);
-            }
-        });
-        panelColumnas.add(btColumna2);
-
-        btColumna1.setBackground(new java.awt.Color(153, 255, 153));
-        btColumna1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        btColumna1.setForeground(new java.awt.Color(0, 0, 0));
-        btColumna1.setText("2 TO 1");
-        btColumna1.setToolTipText("Columna (2:1)");
-        btColumna1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btColumna1ActionPerformed(evt);
-            }
-        });
-        panelColumnas.add(btColumna1);
-
-        btNumero0.setBackground(new java.awt.Color(0, 255, 0));
-        btNumero0.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        btNumero0.setForeground(new java.awt.Color(255, 255, 255));
-        btNumero0.setText("0");
-        btNumero0.setToolTipText("Numero (35:1)");
-        btNumero0.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btNumero0ActionPerformed(evt);
-            }
-        });
-
-        panelDocenas.setBackground(new java.awt.Color(102, 255, 102));
-        panelDocenas.setLayout(new java.awt.GridLayout(1, 3));
-
-        btDocena1.setBackground(new java.awt.Color(153, 255, 153));
-        btDocena1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        btDocena1.setForeground(new java.awt.Color(0, 0, 0));
-        btDocena1.setText("1ra 12");
-        btDocena1.setToolTipText("Columna (2:1)");
-        btDocena1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btDocena1ActionPerformed(evt);
-            }
-        });
-        panelDocenas.add(btDocena1);
-
-        btDocena2.setBackground(new java.awt.Color(153, 255, 153));
-        btDocena2.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        btDocena2.setForeground(new java.awt.Color(0, 0, 0));
-        btDocena2.setText("2da 12");
-        btDocena2.setToolTipText("Columna (2:1)");
-        btDocena2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btDocena2ActionPerformed(evt);
-            }
-        });
-        panelDocenas.add(btDocena2);
-
-        btDocena3.setBackground(new java.awt.Color(153, 255, 153));
-        btDocena3.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        btDocena3.setForeground(new java.awt.Color(0, 0, 0));
-        btDocena3.setText("3ra 12");
-        btDocena3.setToolTipText("Columna (2:1)");
-        btDocena3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btDocena3ActionPerformed(evt);
-            }
-        });
-        panelDocenas.add(btDocena3);
-
-        panelColores.setBackground(new java.awt.Color(102, 255, 102));
-        panelColores.setLayout(new java.awt.GridLayout(1, 6));
-
-        btBajos.setBackground(new java.awt.Color(153, 255, 153));
-        btBajos.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        btBajos.setForeground(new java.awt.Color(0, 0, 0));
-        btBajos.setText("1 a 18");
-        btBajos.setToolTipText("Alto/Bajo (1:1)");
-        btBajos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btBajosActionPerformed(evt);
-            }
-        });
-        panelColores.add(btBajos);
-
-        btPar.setBackground(new java.awt.Color(153, 255, 153));
-        btPar.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        btPar.setForeground(new java.awt.Color(0, 0, 0));
-        btPar.setText("Par");
-        btPar.setToolTipText("Par/Impar (1:1)");
-        btPar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btParActionPerformed(evt);
-            }
-        });
-        panelColores.add(btPar);
-
-        btRojo.setBackground(new java.awt.Color(255, 0, 0));
-        btRojo.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        btRojo.setForeground(new java.awt.Color(255, 255, 255));
-        btRojo.setToolTipText("Color (1:1)");
-        btRojo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btRojoActionPerformed(evt);
-            }
-        });
-        panelColores.add(btRojo);
-
-        btNegro.setBackground(new java.awt.Color(0, 0, 0));
-        btNegro.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        btNegro.setForeground(new java.awt.Color(255, 255, 255));
-        btNegro.setToolTipText("Color (1:1)");
-        btNegro.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btNegroActionPerformed(evt);
-            }
-        });
-        panelColores.add(btNegro);
-
-        btImpar.setBackground(new java.awt.Color(153, 255, 153));
-        btImpar.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        btImpar.setForeground(new java.awt.Color(0, 0, 0));
-        btImpar.setText("Impar");
-        btImpar.setToolTipText("Par/Impar (1:1)");
-        btImpar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btImparActionPerformed(evt);
-            }
-        });
-        panelColores.add(btImpar);
-
-        btAltos.setBackground(new java.awt.Color(153, 255, 153));
-        btAltos.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        btAltos.setForeground(new java.awt.Color(0, 0, 0));
-        btAltos.setText("19 a 36");
-        btAltos.setToolTipText("Alto/Bajo (1:1)");
-        btAltos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btAltosActionPerformed(evt);
-            }
-        });
-        panelColores.add(btAltos);
-
-        javax.swing.GroupLayout panelMesaHijoLayout = new javax.swing.GroupLayout(panelMesaHijo);
-        panelMesaHijo.setLayout(panelMesaHijoLayout);
-        panelMesaHijoLayout.setHorizontalGroup(
-            panelMesaHijoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelMesaHijoLayout.createSequentialGroup()
-                .addComponent(btNumero0, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(panelMesaHijoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(panelColores, javax.swing.GroupLayout.DEFAULT_SIZE, 865, Short.MAX_VALUE)
-                    .addComponent(panelDocenas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(panelNumeros, javax.swing.GroupLayout.DEFAULT_SIZE, 865, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(panelColumnas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-        panelMesaHijoLayout.setVerticalGroup(
-            panelMesaHijoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelMesaHijoLayout.createSequentialGroup()
-                .addGroup(panelMesaHijoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(panelColumnas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(panelNumeros, javax.swing.GroupLayout.DEFAULT_SIZE, 175, Short.MAX_VALUE)
-                    .addComponent(btNumero0, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(panelDocenas, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(panelColores, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-
-        javax.swing.GroupLayout panelMesaLayout = new javax.swing.GroupLayout(panelMesa);
-        panelMesa.setLayout(panelMesaLayout);
-        panelMesaLayout.setHorizontalGroup(
-            panelMesaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelMesaLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(panelMesaHijo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        panelMesaLayout.setVerticalGroup(
-            panelMesaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelMesaLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(panelMesaHijo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        btCerrar.setBackground(new java.awt.Color(153, 255, 153));
+        btCerrar.setBackground(new java.awt.Color(0, 51, 0));
         btCerrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/cerrar.png"))); // NOI18N
         btCerrar.setToolTipText("Cerrar Ventana");
+        btCerrar.setBorder(null);
+        btCerrar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btCerrar.setFocusPainted(false);
         btCerrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btCerrarActionPerformed(evt);
             }
         });
+        jPanelimagen1.add(btCerrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1276, 12, 37, 37));
 
-        labelTiempo.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        labelTiempo.setText("Tiempo de Apuestas: 15");
+        labelFichas.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        labelFichas.setForeground(new java.awt.Color(255, 255, 255));
+        labelFichas.setText("Fichas: ");
+        jPanelimagen1.add(labelFichas, new org.netbeans.lib.awtextra.AbsoluteConstraints(254, 486, 250, -1));
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(labelFichas)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(panelLog, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(panelMesa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(panelFichas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(labelTiempo, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btCerrar, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btCerrar, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(labelTiempo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(panelMesa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(panelFichas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(panelLog, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(labelFichas)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        taLog.setBackground(new java.awt.Color(102, 255, 102));
+        taLog.setColumns(20);
+        taLog.setRows(5);
+        taLog.setEnabled(false);
+        taLog.setFocusable(false);
+        jScrollPane1.setViewportView(taLog);
+
+        jPanelimagen1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 167, 230, 313));
+
+        panelResultado.setBackground(new java.awt.Color(0, 0, 0));
+        panelResultado.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        panelResultado.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel1.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("Resultado: ");
+        panelResultado.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 3, 199, -1));
+
+        labelResultadoNumero.setFont(new java.awt.Font("Dialog", 1, 48)); // NOI18N
+        labelResultadoNumero.setForeground(new java.awt.Color(255, 255, 255));
+        labelResultadoNumero.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        labelResultadoNumero.setToolTipText("");
+        panelResultado.add(labelResultadoNumero, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 230, 70));
+
+        jPanelimagen1.add(panelResultado, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 55, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanelimagen1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(0, 0, 0))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanelimagen1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(0, 0, 0))
         );
 
         pack();
@@ -1396,7 +1441,7 @@ public class Jugar extends javax.swing.JFrame implements Runnable {
         // TODO add your handling code here:
         apostarBajoAlto(1, btAltos, "19 a 36");
     }//GEN-LAST:event_btAltosActionPerformed
-    
+
     private static int getRandomNumberInRange(int min, int max) {
         //Devuelve un numero al azar entre el rango que se le proporciona
         if (min >= max) {
@@ -1424,6 +1469,8 @@ public class Jugar extends javax.swing.JFrame implements Runnable {
 
                 //Numero aleatorio
                 Resultado resultado = Mesa.getResultado(getRandomNumberInRange(0, 36));
+                labelResultadoNumero.setText(resultado.getNum() + "");
+                panelResultado.setBackground(resultado.getColor());
                 taLog.append("Sistema --> Ha salido el " + resultado.getNum() + "\n");
                 //Paga y vuelve a girar
                 pagar(resultado);
@@ -1521,7 +1568,7 @@ public class Jugar extends javax.swing.JFrame implements Runnable {
             labelFichas.setText("Fichas: " + fichas);
         }
     }
-    
+
     public void apostarBajoAlto(int numBajoAlto, JButton boton, String label) {
         //Apuesta a la columna seleccionada
         if (fichaSeleccionada == 0) {
@@ -1559,14 +1606,14 @@ public class Jugar extends javax.swing.JFrame implements Runnable {
             b.setText(contador + "");
             contador++;
         }
-        
+
         btDocena1.setText("1ra 12");
         btDocena2.setText("2da 12");
         btDocena3.setText("3ra 12");
-        
+
         btBajos.setText("1 a 18");
         btAltos.setText("19 a 36");
-        
+
         btPar.setText("Par");
         btImpar.setText("Impar");
 
@@ -1643,31 +1690,71 @@ public class Jugar extends javax.swing.JFrame implements Runnable {
 
     public void cerrarVentana() {
         //Si hay apuestas en la mesa pregunta antes de cerrar
-        if (fichas == fichasPreApuesta) {
-            //Se cierra la ventana de jugar y vuelve al menu
-            if (GestorUsuarios.getUsuarioActivo() != null) {
-                GestorUsuarios.getUsuarioActivo().setFichasFinales(fichas);
+        try {
+            if (fichas == fichasPreApuesta) {
+
+                //Se cierra la ventana de jugar y vuelve al menu
+                if (GestorUsuarios.getUsuarioActivo() != null) {
+                    GestorUsuarios.getUsuarioActivo().setFichasFinales(fichas);
+                    //Guarda las estadísticas
+                    guardarEstadisticas();
+                }
+                m.setVisible(true);
+                this.dispose();
+
+            } else {
+                //Hay apuestas en la mesa
+                int eleccion = JOptionPane.showConfirmDialog(this, "Hay apuestas en la mesa, si sale estas fichas se perderán\n¿Desea salir?",
+                        "Warning", JOptionPane.YES_NO_OPTION);
+                switch (eleccion) {
+                    case 0:
+                        if (GestorUsuarios.getUsuarioActivo() != null) {
+                            GestorUsuarios.getUsuarioActivo().setFichasFinales(fichas);
+                            //Guarda las estadísticas
+                            guardarEstadisticas();
+                        }
+                        m.setVisible(true);
+                        this.dispose();
+                        break;
+                    default:
+                        break;
+                }
             }
-            m.setVisible(true);
-            this.dispose();
-        } else {
-            //Hay apuestas en la mesa
-            int eleccion = JOptionPane.showConfirmDialog(this, "Hay apuestas en la mesa, si sale estas fichas se perderán\n¿Desea salir?",
-                    "Warning", JOptionPane.YES_NO_OPTION);
-            switch (eleccion) {
-                case 0:
-                    if (GestorUsuarios.getUsuarioActivo() != null) {
-                        GestorUsuarios.getUsuarioActivo().setFichasFinales(fichas);
-                    }
-                    m.setVisible(true);
-                    this.dispose();
-                    break;
-                default:
-                    break;
-            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Jugar.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ErrorException ex) {
+            Logger.getLogger(Jugar.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
+
+    public void guardarEstadisticas() throws SQLException, ErrorException {
+        //Escribe las estadisticas en la BBDD
+        PreparedStatement ps = null;
+
+        ps = DataBase.getConexion().prepareStatement("INSERT INTO estadisticasusuario "
+                + "(FECHAREALIZACION, FICHASINICIALES, FICHASFINALES, GANANCIAS, USUARIO_IDUSUARIO)  "
+                + "values(SYSDATE, ?, ?, ?, ?)");
+        ps.setInt(1, GestorUsuarios.getUsuarioActivo().getFichasIniciales());
+        ps.setInt(2, GestorUsuarios.getUsuarioActivo().getFichasFinales());
+        ps.setInt(3, GestorUsuarios.getUsuarioActivo().getFichasFinales() - GestorUsuarios.getUsuarioActivo().getFichasIniciales());
+        ps.setInt(4, GestorUsuarios.getUsuarioActivo().getId());
+        //Ejecuta
+        DataBase.ejecutaUpdateSeguro(ps);
+
+        //Escribe las fichas del usuario
+        PreparedStatement ps2 = null;
+
+        ps2 = DataBase.getConexion().prepareStatement("update usuario "
+                + "set FICHAS = ? "
+                + "where IDUSUARIO = ?");
+        ps2.setInt(1, GestorUsuarios.getUsuarioActivo().getFichasFinales());
+        ps2.setInt(2, GestorUsuarios.getUsuarioActivo().getId());
+
+        //Ejecuta
+        DataBase.ejecutaUpdateSeguro(ps2);
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btAltos;
     private javax.swing.JButton btBajos;
@@ -1720,18 +1807,20 @@ public class Jugar extends javax.swing.JFrame implements Runnable {
     private javax.swing.JButton btPar;
     private javax.swing.JButton btRojo;
     private javax.swing.ButtonGroup grupoFichas;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel jLabel1;
+    private PanelImagen.jPanelimagen jPanelimagen1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel labelFichas;
+    private javax.swing.JLabel labelResultadoNumero;
     private javax.swing.JLabel labelTiempo;
     private javax.swing.JPanel panelColores;
     private javax.swing.JPanel panelColumnas;
     private javax.swing.JPanel panelDocenas;
     private javax.swing.JPanel panelFichas;
-    private javax.swing.JPanel panelLog;
     private javax.swing.JPanel panelMesa;
     private javax.swing.JPanel panelMesaHijo;
     private javax.swing.JPanel panelNumeros;
+    private javax.swing.JPanel panelResultado;
     private javax.swing.JTextArea taLog;
     private javax.swing.JToggleButton tbFicha1;
     private javax.swing.JToggleButton tbFicha100;

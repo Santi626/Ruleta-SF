@@ -40,6 +40,7 @@ public class NuevoUsuario extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         this.setTitle("Ruleta SF - Registrarse");
         this.setIconImage(new ImageIcon(getClass().getResource("/Recursos/login.png")).getImage());
+        this.setResizable(false);
     }
 
     /**
@@ -51,21 +52,21 @@ public class NuevoUsuario extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
+        jPanelimagen1 = new PanelImagen.jPanelimagen();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         tfUsuario = new javax.swing.JTextField();
-        tfPassword = new javax.swing.JPasswordField();
-        jLabel3 = new javax.swing.JLabel();
-        cbMostrarPassword = new javax.swing.JCheckBox();
-        btCancelar = new javax.swing.JButton();
-        btCrear = new javax.swing.JButton();
-        jLabel4 = new javax.swing.JLabel();
-        tfPassword1 = new javax.swing.JPasswordField();
         jLabel5 = new javax.swing.JLabel();
         tfCorreo = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         jdFechaNacimiento = new com.toedter.calendar.JDateChooser();
+        jLabel3 = new javax.swing.JLabel();
+        tfPassword = new javax.swing.JPasswordField();
+        jLabel4 = new javax.swing.JLabel();
+        tfPassword1 = new javax.swing.JPasswordField();
+        cbMostrarPassword = new javax.swing.JCheckBox();
+        btCrear = new javax.swing.JButton();
+        labelAtras = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -74,14 +75,18 @@ public class NuevoUsuario extends javax.swing.JFrame {
             }
         });
 
-        jPanel1.setBackground(new java.awt.Color(102, 255, 102));
+        jPanelimagen1.setImagenFondo(new PanelImagen.ImagenFondo(new java.io.File("C:/Users/santi/OneDrive/SegundoDAM/Proyecto/MisArchivos/Ruleta SF/src/Recursos/fondo.jpg"),1.0f));
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Nuevo Usuario");
 
+        jLabel2.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("*Usuario: ");
         jLabel2.setToolTipText("OBLIGATORIO");
 
+        tfUsuario.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         tfUsuario.setToolTipText("Nombre de usuario");
         tfUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -89,6 +94,29 @@ public class NuevoUsuario extends javax.swing.JFrame {
             }
         });
 
+        jLabel5.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel5.setText("Correo: ");
+
+        tfCorreo.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        tfCorreo.setToolTipText("Correo electrónico");
+
+        jLabel6.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel6.setText("*Fecha de Nacimiento: ");
+        jLabel6.setToolTipText("OBLIGATORIO");
+
+        jdFechaNacimiento.setBackground(new java.awt.Color(0, 51, 51));
+        jdFechaNacimiento.setToolTipText("Fecha de nacimiento");
+        jdFechaNacimiento.setDateFormatString("yyyy-MM-dd");
+        jdFechaNacimiento.setOpaque(false);
+
+        jLabel3.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setText("*Contraseña: ");
+        jLabel3.setToolTipText("OBLIGATORIO");
+
+        tfPassword.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         tfPassword.setToolTipText("Escriba su contraseña");
         tfPassword.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -96,42 +124,12 @@ public class NuevoUsuario extends javax.swing.JFrame {
             }
         });
 
-        jLabel3.setText("*Contraseña: ");
-        jLabel3.setToolTipText("OBLIGATORIO");
-
-        cbMostrarPassword.setBackground(new java.awt.Color(102, 255, 102));
-        cbMostrarPassword.setText("Mostrar Contraseña");
-        cbMostrarPassword.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbMostrarPasswordActionPerformed(evt);
-            }
-        });
-
-        btCancelar.setText("Cancelar");
-        btCancelar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btCancelarMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                btCancelarMouseExited(evt);
-            }
-        });
-        btCancelar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btCancelarActionPerformed(evt);
-            }
-        });
-
-        btCrear.setText("Crear");
-        btCrear.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btCrearActionPerformed(evt);
-            }
-        });
-
-        jLabel4.setText("*Confirmar\nContraseña");
+        jLabel4.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel4.setText("*Conformar Contraseña: ");
         jLabel4.setToolTipText("OBLIGATORIO");
 
+        tfPassword1.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         tfPassword1.setToolTipText("Confirme su contraseña");
         tfPassword1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -139,95 +137,113 @@ public class NuevoUsuario extends javax.swing.JFrame {
             }
         });
 
-        jLabel5.setText("Correo: ");
+        cbMostrarPassword.setBackground(new java.awt.Color(0, 0, 0));
+        cbMostrarPassword.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        cbMostrarPassword.setForeground(new java.awt.Color(255, 255, 255));
+        cbMostrarPassword.setText("Mostrar Contraseña");
+        cbMostrarPassword.setOpaque(false);
+        cbMostrarPassword.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbMostrarPasswordActionPerformed(evt);
+            }
+        });
 
-        tfCorreo.setToolTipText("Correo electrónico");
+        btCrear.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        btCrear.setText("Darese de Alta");
+        btCrear.setBorder(null);
+        btCrear.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btCrear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btCrearActionPerformed(evt);
+            }
+        });
 
-        jLabel6.setText("*Fecha de Nacimiento: ");
-        jLabel6.setToolTipText("OBLIGATORIO");
+        labelAtras.setForeground(new java.awt.Color(255, 255, 255));
+        labelAtras.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/arrowBack.png"))); // NOI18N
+        labelAtras.setToolTipText("Volver");
+        labelAtras.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        labelAtras.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                labelAtrasMouseClicked(evt);
+            }
+        });
 
-        jdFechaNacimiento.setBackground(new java.awt.Color(102, 255, 102));
-        jdFechaNacimiento.setToolTipText("Fecha de nacimiento");
-        jdFechaNacimiento.setDateFormatString("yyyy-MM-dd");
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(25, 25, 25)
-                        .addComponent(btCancelar)
-                        .addGap(163, 163, 163)
-                        .addComponent(btCrear, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(jLabel4)
-                            .addGap(32, 32, 32)
-                            .addComponent(tfPassword1, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(jPanel1Layout.createSequentialGroup()
+        javax.swing.GroupLayout jPanelimagen1Layout = new javax.swing.GroupLayout(jPanelimagen1);
+        jPanelimagen1.setLayout(jPanelimagen1Layout);
+        jPanelimagen1Layout.setHorizontalGroup(
+            jPanelimagen1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelimagen1Layout.createSequentialGroup()
+                .addGap(0, 125, Short.MAX_VALUE)
+                .addComponent(btCrear, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(125, 125, 125))
+            .addGroup(jPanelimagen1Layout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addGroup(jPanelimagen1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelimagen1Layout.createSequentialGroup()
+                        .addComponent(labelAtras)
+                        .addGap(111, 111, 111)
+                        .addComponent(jLabel1))
+                    .addGroup(jPanelimagen1Layout.createSequentialGroup()
+                        .addGroup(jPanelimagen1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel3)
-                            .addGap(32, 32, 32)
-                            .addComponent(tfPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(cbMostrarPassword)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(jLabel5)
-                                .addComponent(jLabel2)
-                                .addComponent(jLabel6))
-                            .addGap(32, 32, 32)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(tfUsuario)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel2))
+                        .addGap(32, 32, 32)
+                        .addGroup(jPanelimagen1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanelimagen1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(cbMostrarPassword)
+                                .addComponent(tfPassword1)
+                                .addComponent(jdFechaNacimiento, javax.swing.GroupLayout.DEFAULT_SIZE, 215, Short.MAX_VALUE)
                                 .addComponent(tfCorreo)
-                                .addComponent(jdFechaNacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addComponent(jLabel1))
+                                .addComponent(tfUsuario))
+                            .addComponent(tfPassword, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addGap(34, 34, 34)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+        jPanelimagen1Layout.setVerticalGroup(
+            jPanelimagen1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelimagen1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanelimagen1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(jLabel1)
+                    .addComponent(labelAtras))
+                .addGap(26, 26, 26)
+                .addGroup(jPanelimagen1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jLabel2)
                     .addComponent(tfUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(24, 24, 24)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGap(36, 36, 36)
+                .addGroup(jPanelimagen1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(tfCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(30, 30, 30)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(36, 36, 36)
+                .addGroup(jPanelimagen1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel6)
                     .addComponent(jdFechaNacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(33, 33, 33)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGap(36, 36, 36)
+                .addGroup(jPanelimagen1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tfPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
-                .addGap(30, 30, 30)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(tfPassword1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
-                .addGap(18, 18, 18)
+                .addGap(36, 36, 36)
+                .addGroup(jPanelimagen1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(jLabel4)
+                    .addComponent(tfPassword1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(cbMostrarPassword)
-                .addGap(57, 57, 57)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btCancelar)
-                    .addComponent(btCrear))
-                .addContainerGap(37, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(btCrear, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(21, 21, 21))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanelimagen1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanelimagen1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -254,22 +270,6 @@ public class NuevoUsuario extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_cbMostrarPasswordActionPerformed
 
-    private void btCancelarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btCancelarMouseEntered
-        // TODO add your handling code here:
-        btCancelar.setBackground(Color.RED);
-    }//GEN-LAST:event_btCancelarMouseEntered
-
-    private void btCancelarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btCancelarMouseExited
-        // TODO add your handling code here:
-        btCancelar.setBackground(new Color(238, 238, 238));
-    }//GEN-LAST:event_btCancelarMouseExited
-
-    private void btCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCancelarActionPerformed
-        // TODO add your handling code here:
-        l.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_btCancelarActionPerformed
-
     private void btCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCrearActionPerformed
         // TODO add your handling code here:
         creaUsuario();
@@ -284,6 +284,12 @@ public class NuevoUsuario extends javax.swing.JFrame {
         l.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_formWindowClosing
+
+    private void labelAtrasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelAtrasMouseClicked
+        // TODO add your handling code here:
+        l.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_labelAtrasMouseClicked
 
     public static int calculateAge(LocalDate birthDate, LocalDate currentDate) {
         //Calcular edad de usuario
@@ -398,7 +404,6 @@ public class NuevoUsuario extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btCancelar;
     private javax.swing.JButton btCrear;
     private javax.swing.JCheckBox cbMostrarPassword;
     private javax.swing.JLabel jLabel1;
@@ -407,8 +412,9 @@ public class NuevoUsuario extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JPanel jPanel1;
+    private PanelImagen.jPanelimagen jPanelimagen1;
     private com.toedter.calendar.JDateChooser jdFechaNacimiento;
+    private javax.swing.JLabel labelAtras;
     private javax.swing.JTextField tfCorreo;
     private javax.swing.JPasswordField tfPassword;
     private javax.swing.JPasswordField tfPassword1;

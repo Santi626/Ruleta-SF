@@ -43,6 +43,7 @@ public class Menu extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         this.setTitle("Ruleta SF - Menú Principal");
         this.setIconImage(new ImageIcon(getClass().getResource("/Recursos/Logo.png")).getImage());
+        this.setResizable(false);
 
         this.l = l;
 //        this.cliente = cliente;
@@ -54,12 +55,11 @@ public class Menu extends javax.swing.JFrame {
 //        } catch (IOException ex) {
 //            JOptionPane.showMessageDialog(this, "Ha habido un problema conectandose con el servidor");
 //        }
-        
-        if (GestorUsuarios.getUsuarioActivo() == null) {
-            //Bloquea el boton de estadísticas
-            btEstadisticas.setEnabled(false);
-            btEstadisticas.setToolTipText("Debe haber iniciado sesion para tener acceso a sus estadísticas");
-        }
+//        if (GestorUsuarios.getUsuarioActivo() == null) {
+//            //Bloquea el boton de estadísticas
+//            btEstadisticas.setEnabled(false);
+//            btEstadisticas.setToolTipText("Debe haber iniciado sesion para tener acceso a sus estadísticas");
+//        }
     }
 
     /**
@@ -71,12 +71,10 @@ public class Menu extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
-        btJugar = new javax.swing.JButton();
-        btEstadisticas = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
+        panelFondo = new PanelImagen.jPanelimagen();
+        panelJugar = new PanelImagen.jPanelimagen();
+        panelEstadisticas = new PanelImagen.jPanelimagen();
         btCerrar = new javax.swing.JButton();
-        btCerrarSesion = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -85,78 +83,85 @@ public class Menu extends javax.swing.JFrame {
             }
         });
 
-        jPanel1.setBackground(new java.awt.Color(102, 255, 102));
+        panelFondo.setImagenFondo(new PanelImagen.ImagenFondo(new java.io.File("C:/Users/santi/OneDrive/SegundoDAM/Proyecto/MisArchivos/Ruleta SF/src/Recursos/fondo.jpg"),1.0f));
 
-        btJugar.setText("JUGAR");
-        btJugar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btJugarActionPerformed(evt);
+        panelJugar.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        panelJugar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        panelJugar.setImagenFondo(new PanelImagen.ImagenFondo(new java.io.File("C:/Users/santi/OneDrive/SegundoDAM/Proyecto/MisArchivos/Ruleta SF/src/Recursos/logoJugar.jpg"),1.0f));
+        panelJugar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                panelJugarMouseClicked(evt);
             }
         });
 
-        btEstadisticas.setText("Estadísticas");
-        btEstadisticas.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btEstadisticasActionPerformed(evt);
+        javax.swing.GroupLayout panelJugarLayout = new javax.swing.GroupLayout(panelJugar);
+        panelJugar.setLayout(panelJugarLayout);
+        panelJugarLayout.setHorizontalGroup(
+            panelJugarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 196, Short.MAX_VALUE)
+        );
+        panelJugarLayout.setVerticalGroup(
+            panelJugarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 233, Short.MAX_VALUE)
+        );
+
+        panelEstadisticas.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        panelEstadisticas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        panelEstadisticas.setImagenFondo(new PanelImagen.ImagenFondo(new java.io.File("C:/Users/santi/OneDrive/SegundoDAM/Proyecto/MisArchivos/Ruleta SF/src/Recursos/logoEstadisticas.jpg"),1.0f));
+        panelEstadisticas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                panelEstadisticasMouseClicked(evt);
             }
         });
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/logo_RuletaSF.png"))); // NOI18N
+        javax.swing.GroupLayout panelEstadisticasLayout = new javax.swing.GroupLayout(panelEstadisticas);
+        panelEstadisticas.setLayout(panelEstadisticasLayout);
+        panelEstadisticasLayout.setHorizontalGroup(
+            panelEstadisticasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 196, Short.MAX_VALUE)
+        );
+        panelEstadisticasLayout.setVerticalGroup(
+            panelEstadisticasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 233, Short.MAX_VALUE)
+        );
 
-        btCerrar.setText("CERRAR");
-        btCerrar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btCerrarMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                btCerrarMouseExited(evt);
-            }
-        });
+        btCerrar.setBackground(new java.awt.Color(0, 0, 0));
+        btCerrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/cerrar.png"))); // NOI18N
+        btCerrar.setToolTipText("Cerrar Ventana");
+        btCerrar.setContentAreaFilled(false);
+        btCerrar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btCerrar.setFocusPainted(false);
         btCerrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btCerrarActionPerformed(evt);
             }
         });
 
-        btCerrarSesion.setText("Cerrar Sesion");
-        btCerrarSesion.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btCerrarSesionActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        javax.swing.GroupLayout panelFondoLayout = new javax.swing.GroupLayout(panelFondo);
+        panelFondo.setLayout(panelFondoLayout);
+        panelFondoLayout.setHorizontalGroup(
+            panelFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelFondoLayout.createSequentialGroup()
+                .addGap(135, 135, 135)
+                .addComponent(panelJugar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(168, 168, 168)
+                .addComponent(panelEstadisticas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(135, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelFondoLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btCerrar)
-                .addGap(83, 83, 83)
-                .addComponent(btCerrarSesion)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(121, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btJugar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btEstadisticas, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(121, Short.MAX_VALUE))
+                .addComponent(btCerrar, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(54, Short.MAX_VALUE)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(57, 57, 57)
-                .addComponent(btJugar)
-                .addGap(62, 62, 62)
-                .addComponent(btEstadisticas)
-                .addGap(72, 72, 72)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btCerrar)
-                    .addComponent(btCerrarSesion))
-                .addContainerGap(44, Short.MAX_VALUE))
+        panelFondoLayout.setVerticalGroup(
+            panelFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelFondoLayout.createSequentialGroup()
+                .addGap(12, 12, 12)
+                .addComponent(btCerrar, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(81, 81, 81)
+                .addGroup(panelFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(panelJugar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(panelEstadisticas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(98, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -164,12 +169,12 @@ public class Menu extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(panelFondo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(0, 0, 0))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(panelFondo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -180,72 +185,38 @@ public class Menu extends javax.swing.JFrame {
         salir();
     }//GEN-LAST:event_formWindowClosing
 
-    private void btJugarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btJugarActionPerformed
+    private void panelEstadisticasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelEstadisticasMouseClicked
         // TODO add your handling code here:
-        Jugar j = new Jugar(this);
-        j.setVisible(true);
-        //Hilo para iniciar la ventana
-        Thread hilo = new Thread(j);
-        hilo.start();
-        this.setVisible(false);
-    }//GEN-LAST:event_btJugarActionPerformed
+            if (GestorUsuarios.getUsuarioActivo() != null) {
+                Estadisticas e = new Estadisticas(this);
+                e.setVisible(true);
+                this.setVisible(false);
+            }
+    }//GEN-LAST:event_panelEstadisticasMouseClicked
 
-    private void btCerrarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btCerrarMouseEntered
-        // TODO add your handling code here:
-        btCerrar.setBackground(Color.RED);
-    }//GEN-LAST:event_btCerrarMouseEntered
-
-    private void btCerrarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btCerrarMouseExited
-        // TODO add your handling code here:
-        btCerrar.setBackground(new Color(238, 238, 238));
-    }//GEN-LAST:event_btCerrarMouseExited
+    private void panelJugarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelJugarMouseClicked
+            // TODO add your handling code here:
+            Jugar j = new Jugar(this);
+            j.setVisible(true);
+            //Hilo para iniciar la ventana
+            Thread hilo = new Thread(j);
+            hilo.start();
+            this.setVisible(false);
+    }//GEN-LAST:event_panelJugarMouseClicked
 
     private void btCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCerrarActionPerformed
         // TODO add your handling code here:
-        salir();
-    }//GEN-LAST:event_btCerrarActionPerformed
-
-    private void btCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCerrarSesionActionPerformed
-        // TODO add your handling code here:
         cerrarSesion();
-    }//GEN-LAST:event_btCerrarSesionActionPerformed
-
-    private void btEstadisticasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btEstadisticasActionPerformed
-        // TODO add your handling code here:
-        Estadisticas e = new Estadisticas(this);
-        e.setVisible(true);
-        this.setVisible(false);
-    }//GEN-LAST:event_btEstadisticasActionPerformed
+    }//GEN-LAST:event_btCerrarActionPerformed
 
     public void cerrarSesion() {
         //Cierra sesion y vuelve a la pantalla de login
-        if (GestorUsuarios.getUsuarioActivo() != null) {
-            try {
-                guardarEstadisticas();
-            } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(this, "Ha habido un problema guardando sus estadisticas\nSaliendo sin guardar.");
-            } catch (ErrorException ex) {
-                JOptionPane.showMessageDialog(this, "Ha habido un problema guardando sus estadisticas\nSaliendo sin guardar.");
-            }
-            GestorUsuarios.setUsuarioActivo(null);
-        }
+        GestorUsuarios.setUsuarioActivo(null);
         l.setVisible(true);
         this.dispose();
     }
 
     public void salir() {
-        //Cierra la aplicacion guardando las estadisticas
-
-        if (GestorUsuarios.getUsuarioActivo() != null) {
-            try {
-                guardarEstadisticas();
-            } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(this, "Ha habido un problema guardando sus estadisticas\nSaliendo sin guardar.");
-            } catch (ErrorException ex) {
-                JOptionPane.showMessageDialog(this, "Ha habido un problema guardando sus estadisticas\nSaliendo sin guardar.");
-            }
-        }
-
         //Sale del programa
         System.exit(0);
     }
@@ -263,26 +234,24 @@ public class Menu extends javax.swing.JFrame {
         ps.setInt(4, GestorUsuarios.getUsuarioActivo().getId());
         //Ejecuta
         DataBase.ejecutaUpdateSeguro(ps);
-        
-        //Escribe las fichas del usuario
-            PreparedStatement ps2 = null;
 
-            ps2 = DataBase.getConexion().prepareStatement("update usuario "
-                    + "set FICHAS = ? "
-                    + "where IDUSUARIO = ?");
-            ps2.setInt(1, GestorUsuarios.getUsuarioActivo().getFichasFinales());
-            ps2.setInt(2, GestorUsuarios.getUsuarioActivo().getId());
-            
-            //Ejecuta
-            DataBase.ejecutaUpdateSeguro(ps2);
+        //Escribe las fichas del usuario
+        PreparedStatement ps2 = null;
+
+        ps2 = DataBase.getConexion().prepareStatement("update usuario "
+                + "set FICHAS = ? "
+                + "where IDUSUARIO = ?");
+        ps2.setInt(1, GestorUsuarios.getUsuarioActivo().getFichasFinales());
+        ps2.setInt(2, GestorUsuarios.getUsuarioActivo().getId());
+
+        //Ejecuta
+        DataBase.ejecutaUpdateSeguro(ps2);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btCerrar;
-    private javax.swing.JButton btCerrarSesion;
-    private javax.swing.JButton btEstadisticas;
-    private javax.swing.JButton btJugar;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JPanel jPanel1;
+    private PanelImagen.jPanelimagen panelEstadisticas;
+    private PanelImagen.jPanelimagen panelFondo;
+    private PanelImagen.jPanelimagen panelJugar;
     // End of variables declaration//GEN-END:variables
 }

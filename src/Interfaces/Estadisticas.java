@@ -37,6 +37,7 @@ public class Estadisticas extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         this.setTitle("Ruleta SF - Estadísticas");
         this.setIconImage(new ImageIcon(getClass().getResource("/Recursos/Logo.png")).getImage());
+        this.setResizable(false);
 
         cargaTabla(null);
     }
@@ -50,22 +51,53 @@ public class Estadisticas extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tablaEstadisticas = new javax.swing.JTable();
+        jPanelimagen1 = new PanelImagen.jPanelimagen();
+        labelAtras = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        btCerrar = new javax.swing.JButton();
         dcFechaFiltro = new com.toedter.calendar.JDateChooser();
         btFiltrar = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tablaEstadisticas = new javax.swing.JTable();
         labelTotal = new javax.swing.JLabel();
         labelMedia = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(102, 255, 102));
+        jPanelimagen1.setImagenFondo(new PanelImagen.ImagenFondo(new java.io.File("C:/Users/santi/OneDrive/SegundoDAM/Proyecto/MisArchivos/Ruleta SF/src/Recursos/fondo.jpg"),1.0f));
 
-        jScrollPane1.setBackground(new java.awt.Color(102, 255, 102));
+        labelAtras.setForeground(new java.awt.Color(255, 255, 255));
+        labelAtras.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/arrowBack.png"))); // NOI18N
+        labelAtras.setToolTipText("Volver");
+        labelAtras.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        labelAtras.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                labelAtrasMouseClicked(evt);
+            }
+        });
 
+        jLabel1.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("ESTADÍSTICAS");
+
+        dcFechaFiltro.setBackground(new java.awt.Color(0, 51, 51));
+        dcFechaFiltro.setDateFormatString("dd-MM-yyyy");
+        dcFechaFiltro.setOpaque(false);
+
+        btFiltrar.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        btFiltrar.setText("Filtrar");
+        btFiltrar.setToolTipText("Filtra por fecha ");
+        btFiltrar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btFiltrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btFiltrarActionPerformed(evt);
+            }
+        });
+
+        jScrollPane1.setBackground(new java.awt.Color(0, 51, 51));
+
+        tablaEstadisticas.setBackground(new java.awt.Color(0, 51, 51));
+        tablaEstadisticas.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        tablaEstadisticas.setForeground(new java.awt.Color(255, 255, 255));
         tablaEstadisticas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -82,118 +114,86 @@ public class Estadisticas extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tablaEstadisticas.setToolTipText("");
+        tablaEstadisticas.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jScrollPane1.setViewportView(tablaEstadisticas);
 
-        jLabel1.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        jLabel1.setText("ESTADÍSTICAS");
+        labelTotal.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        labelTotal.setForeground(new java.awt.Color(255, 255, 255));
+        labelTotal.setText(" Total de Ganancias: ");
 
-        btCerrar.setText("Cerrar");
-        btCerrar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btCerrarMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                btCerrarMouseExited(evt);
-            }
-        });
-        btCerrar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btCerrarActionPerformed(evt);
-            }
-        });
+        labelMedia.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        labelMedia.setForeground(new java.awt.Color(255, 255, 255));
+        labelMedia.setText(" Media de Ganancias: ");
 
-        dcFechaFiltro.setBackground(new java.awt.Color(102, 255, 102));
-        dcFechaFiltro.setDateFormatString("dd-MM-yyyy");
-
-        btFiltrar.setText("Filtrar");
-        btFiltrar.setToolTipText("Filtra por fecha ");
-        btFiltrar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btFiltrarActionPerformed(evt);
-            }
-        });
-
-        labelTotal.setText("Total de Ganancias: ");
-
-        labelMedia.setText("Media de Ganancias: ");
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(43, 43, 43)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                            .addComponent(jLabel1)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 546, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(dcFechaFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(77, 77, 77)
-                                .addComponent(btFiltrar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(btCerrar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(45, 45, 45)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout jPanelimagen1Layout = new javax.swing.GroupLayout(jPanelimagen1);
+        jPanelimagen1.setLayout(jPanelimagen1Layout);
+        jPanelimagen1Layout.setHorizontalGroup(
+            jPanelimagen1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelimagen1Layout.createSequentialGroup()
+                .addGap(35, 35, 35)
+                .addComponent(labelAtras)
+                .addGroup(jPanelimagen1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelimagen1Layout.createSequentialGroup()
+                        .addGap(5, 5, 5)
+                        .addGroup(jPanelimagen1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(labelMedia)
-                            .addComponent(labelTotal))))
-                .addContainerGap(43, Short.MAX_VALUE))
+                            .addComponent(labelTotal)
+                            .addGroup(jPanelimagen1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addGroup(jPanelimagen1Layout.createSequentialGroup()
+                                    .addComponent(dcFechaFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(btFiltrar, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 546, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(jPanelimagen1Layout.createSequentialGroup()
+                        .addGap(186, 186, 186)
+                        .addComponent(jLabel1)))
+                .addGap(70, 70, 70))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addComponent(jLabel1)
-                .addGap(30, 30, 30)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btFiltrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        jPanelimagen1Layout.setVerticalGroup(
+            jPanelimagen1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelimagen1Layout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addGroup(jPanelimagen1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(labelAtras)
+                    .addComponent(jLabel1))
+                .addGap(29, 29, 29)
+                .addGroup(jPanelimagen1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(btFiltrar)
                     .addComponent(dcFechaFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(31, 31, 31)
                 .addComponent(labelTotal)
-                .addGap(18, 18, 18)
+                .addGap(31, 31, 31)
                 .addComponent(labelMedia)
-                .addGap(49, 49, 49)
-                .addComponent(btCerrar)
-                .addGap(29, 29, 29))
+                .addGap(37, 37, 37))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanelimagen1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanelimagen1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btCerrarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btCerrarMouseEntered
-        // TODO add your handling code here:
-        btCerrar.setBackground(Color.RED);
-    }//GEN-LAST:event_btCerrarMouseEntered
-
-    private void btCerrarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btCerrarMouseExited
-        // TODO add your handling code here:
-        btCerrar.setBackground(new Color(238, 238, 238));
-    }//GEN-LAST:event_btCerrarMouseExited
-
-    private void btCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCerrarActionPerformed
-        // TODO add your handling code here:
-        m.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_btCerrarActionPerformed
-
     private void btFiltrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btFiltrarActionPerformed
         // TODO add your handling code here:
         cargaTabla(dcFechaFiltro.getDate());
     }//GEN-LAST:event_btFiltrarActionPerformed
+
+    private void labelAtrasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelAtrasMouseClicked
+        // TODO add your handling code here:
+        m.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_labelAtrasMouseClicked
 
     private void cargaTabla(Date fechaFiltro) {
         //Carga los datos en la tabla
@@ -205,7 +205,7 @@ public class Estadisticas extends javax.swing.JFrame {
         try {
             if (fechaFiltro == null) {
                 //Sin filtros
-                ps = DataBase.getConexion().prepareStatement("Select GANANCIAS, FICHASINICIALES, FICHASFINALES, FECHAREALIZACION "
+                ps = DataBase.getConexion().prepareStatement("Select * "
                         + "from ESTADISTICASUSUARIO "
                         + "where USUARIO_IDUSUARIO = ?");
                 ps.setInt(1, GestorUsuarios.getUsuarioActivo().getId());
@@ -217,17 +217,17 @@ public class Estadisticas extends javax.swing.JFrame {
 
                 if (rs.isBeforeFirst()) {
                     while (rs.next()) {
-                        modeloTabla.addRow(new String[]{rs.getInt(1) + "", rs.getInt(2) + "", rs.getInt(3) + "",
-                            rs.getDate(4).toString()});
+                        modeloTabla.addRow(new String[]{rs.getInt("GANANCIAS") + "", rs.getInt("FICHASINICIALES") + "",
+                            rs.getInt("FICHASFINALES") + "", rs.getDate("FECHAREALIZACION").toString()});
 
-                        media += rs.getInt(1);
+                        media += rs.getInt("GANANCIAS");
                         numFilas++;
                     }
-                    labelTotal.setText("Total de Ganancias: " + media);
-                    labelMedia.setText("Media de Ganancias: " + media / numFilas);
+                    labelTotal.setText(" Total de Ganancias: " + media);
+                    labelMedia.setText(" Media de Ganancias: " + media / numFilas);
                 } else {
-                    labelTotal.setText("Total de Ganancias: 0");
-                    labelMedia.setText("Media de Ganancias: 0");
+                    labelTotal.setText(" Total de Ganancias: 0");
+                    labelMedia.setText(" Media de Ganancias: 0");
                 }
 
             } else {
@@ -251,12 +251,12 @@ public class Estadisticas extends javax.swing.JFrame {
                         media += rs.getInt(1);
                         numFilas++;
                     }
-                    labelTotal.setText("Total de Ganancias: " + media);
-                    labelMedia.setText("Media de Ganancias: " + media / numFilas);
+                    labelTotal.setText(" Total de Ganancias: " + media);
+                    labelMedia.setText(" Media de Ganancias: " + media / numFilas);
                 } else {
                     JOptionPane.showMessageDialog(this, "No se ha encontrado ningun dato", "Informacion", JOptionPane.INFORMATION_MESSAGE);
-                    labelTotal.setText("Total de Ganancias: 0");
-                    labelMedia.setText("Media de Ganancias: 0");
+                    labelTotal.setText(" Total de Ganancias: 0");
+                    labelMedia.setText(" Media de Ganancias: 0");
                 }
 
             }
@@ -275,12 +275,12 @@ public class Estadisticas extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btCerrar;
     private javax.swing.JButton btFiltrar;
     private com.toedter.calendar.JDateChooser dcFechaFiltro;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JPanel jPanel1;
+    private PanelImagen.jPanelimagen jPanelimagen1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel labelAtras;
     private javax.swing.JLabel labelMedia;
     private javax.swing.JLabel labelTotal;
     private javax.swing.JTable tablaEstadisticas;
